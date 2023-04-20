@@ -1,10 +1,13 @@
-import UserAuth from '@/components/user-auth'
+import Hero from '@/components/hero'
+import { getCurrentUser } from '@/lib/session';
 
 
 export default async function Home() {
+  const user = await getCurrentUser();
+
   return (
-    <main className="flex flex-col items-center justify-between min-h-screen p-24">
-      <UserAuth />
+    <main className="">
+      <Hero user={user}/>
     </main>
   )
 }

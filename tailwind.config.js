@@ -17,25 +17,11 @@ module.exports = {
       },
       fontFamily: {
         sans: ["var(--font-inter)", ...fontFamily.sans],
-      },
+      }
     },
   },
   daisyui: {
-    themes: [
-      {
-        mytheme: {
-          primary: "#2C3E50",
-          secondary: "#B7850B",
-          accent: "#1FB2A5",
-          neutral: "#808080",
-          "base-100": "#2A303C",
-          info: "#3ABFF8",
-          success: "#36D399",
-          warning: "#FBBD23",
-          error: "#F87272",
-        },
-      },
-    ],
+
   },
-  plugins: [require("daisyui")],
+  plugins: [require("@tailwindcss/typography"), require("daisyui")],
 };

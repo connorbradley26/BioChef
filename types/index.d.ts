@@ -8,3 +8,12 @@ export type SiteConfig = {
     }
   }
   
+
+export type mealPlans = {
+    id: number,
+    name: string,
+    description: string,
+    ingredients: { id: number, name: string, quantity: number, unit: string }[],
+    instructions: { id: number, step: string }[],
+    image: string,
+}
