@@ -2,6 +2,7 @@ import NavBar from '@/components/nav-bar'
 import './globals.css'
 import { getCurrentUser } from '@/lib/session'
 import { Inter as FontSans } from 'next/font/google'
+import { Analytics } from '@vercel/analytics/react';
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -28,6 +29,7 @@ export default async function RootLayout({
       <body className=''>
         <NavBar user={user} />
         {children}
+        <Analytics />
       </body>
     </html>
   )
