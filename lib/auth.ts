@@ -7,15 +7,9 @@ import { db } from "@/lib/db"
 
 
 export const authOptions: NextAuthOptions = {
-  // huh any! I know.
-  // This is a temporary fix for prisma client.
-  // @see https://github.com/prisma/prisma/issues/16117
-  adapter: PrismaAdapter(db as any),
+  adapter: PrismaAdapter(db),
   session: {
     strategy: "jwt",
-  },
-  pages: {
-    signIn: "/login",
   },
   providers: [
     GoogleProvider({
@@ -56,4 +50,5 @@ export const authOptions: NextAuthOptions = {
       }
     },
   },
+  secret: process.env.NEXTAUTH_SECRET || ""
 }
