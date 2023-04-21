@@ -1,4 +1,4 @@
-import MealPlans from "@/components/MealPlans";
+import MealPlans from "@/components/meal-plans/index";
 import { mealPlans } from "@/dummydata/MealPlans";
 
 
