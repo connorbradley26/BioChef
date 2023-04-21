@@ -39,7 +39,7 @@ export default function NutritionalBox() {
 
 
     return (
-        <div className="p-4 h-[200px] relative">
+        <div className="p-4 h-[200px] bg-base-100 rounded-box relative">
             <canvas className="" ref={chartRef} />
       </div>
 

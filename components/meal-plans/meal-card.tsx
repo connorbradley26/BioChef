@@ -11,7 +11,7 @@ type MealPlan = {
 
 export default function Meal({meal} : {meal: MealPlan}) {
     return (
-        <li className="mx-10 carousel-item">
+        <li className="mx-10 my-10 carousel-item">
             <div className="shadow-xl card w-96 bg-base-100">
                 <figure>
                     <img src={meal.image} alt={meal.name} className="pointer-events-none" />
@@ -21,7 +21,7 @@ export default function Meal({meal} : {meal: MealPlan}) {
                     <p className="card-subtitle">{meal.description}</p>
                     <div className="justify-end card-actions">
                         <Link href={`/individual-meal/${meal.id}`}>
-                            <button className="pointer-events-auto btn btn-primary">Edit</button>
+                            <button className="pointer-events-auto btn btn-primary">View</button>
                         </Link>
                     </div>
                 </div>

@@ -28,7 +28,7 @@ export default async function RootLayout({
   const user = await getCurrentUser();
 
   return (
-    <html lang="en" className={fontSans.variable + " font-sans antialiased bg-zinc-800"} data-theme="dark">
+    <html lang="en" className={fontSans.variable + " font-sans antialiased"} data-theme="light">
       <body className=''>
         <NavBar user={user} />
         {children}

@@ -1,3 +1,4 @@
+import Link from "next/link"
 
 
 export default function YourNeedsBox() {
@@ -57,6 +58,11 @@ export default function YourNeedsBox() {
                         </div>
                     </div>
                 ))}
+                <div className="justify-end card-actions">
+                    <Link href="/nutritional-information/update">
+                        <button className="btn btn-primary">Update</button>
+                    </Link>
+                </div>
             </div>
         </div>
     )
