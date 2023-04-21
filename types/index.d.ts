@@ -15,5 +15,6 @@ export type mealPlans = {
     description: string,
     ingredients: { id: number, name: string, quantity: number, unit: string }[],
     instructions: { id: number, step: string }[],
+    nutrition: { calories: number, fat: number, carbs: number, protein: number },
     image: string,
 }

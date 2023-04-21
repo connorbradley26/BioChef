@@ -20,9 +20,7 @@ export default function Hero({user}: {user?: User}) {
                     </div>
                     <h1 className="text-5xl font-bold">Bio Chef</h1>
                     <p className="py-6">
-                        Luxury health and wellness brand that analyses users
-                        biological make up and provides a custom meal plan along
-                        with personal chefs within your home.
+                        Create custom meal plans and track your nutrition
                     </p>
                     {user ? (
                         <div className="flex justify-center gap-4 ">

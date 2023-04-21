@@ -3,6 +3,9 @@ import './globals.css'
 import { getCurrentUser } from '@/lib/session'
 import { Inter as FontSans } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/react';
+import { config } from '@fortawesome/fontawesome-svg-core'
+import '@fortawesome/fontawesome-svg-core/styles.css'
+config.autoAddCss = false
 
 const fontSans = FontSans({
   subsets: ["latin"],

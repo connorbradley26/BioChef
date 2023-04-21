@@ -99,6 +99,12 @@ export const mealPlans = [
                 step: "Serve with rice or bread.",
             },
         ],
+        nutrition: {
+            calories: 500,
+            fat: 10,
+            carbs: 50,
+            protein: 20,
+        },
         image: "https://img.hellofresh.com/f_auto,fl_lossy,q_auto,w_1200/hellofresh_s3/image/roasted-veggie-lentil-jumble-69bfec2c-16875e0b.jpg",
     },
     {
@@ -201,6 +207,12 @@ export const mealPlans = [
                 step: "Serve with rice or bread.",
             },
         ],
+        nutrition: {
+            calories: 500,
+            fat: 10,
+            carbs: 50,
+            protein: 20,
+        },
         image: "https://img.hellofresh.com/f_auto,fl_lossy,q_auto,w_1200/hellofresh_s3/image/roasted-veggie-lentil-jumble-69bfec2c-16875e0b.jpg",
     },
     {
@@ -303,6 +315,12 @@ export const mealPlans = [
                 step: "Serve with rice or bread.",
             },
         ],
+        nutrition: {
+            calories: 500,
+            fat: 10,
+            carbs: 50,
+            protein: 20,
+        },
         image: "https://img.hellofresh.com/f_auto,fl_lossy,q_auto,w_1200/hellofresh_s3/image/roasted-veggie-lentil-jumble-69bfec2c-16875e0b.jpg",
     },
     {
@@ -405,6 +423,12 @@ export const mealPlans = [
                 step: "Serve with rice or bread.",
             },
         ],
+        nutrition: {
+            calories: 500,
+            fat: 10,
+            carbs: 50,
+            protein: 20,
+        },
         image: "https://img.hellofresh.com/f_auto,fl_lossy,q_auto,w_1200/hellofresh_s3/image/roasted-veggie-lentil-jumble-69bfec2c-16875e0b.jpg",
     },
     {
@@ -507,6 +531,12 @@ export const mealPlans = [
                 step: "Serve with rice or bread.",
             },
         ],
+        nutrition: {
+            calories: 500,
+            fat: 10,
+            carbs: 50,
+            protein: 20,
+        },
         image: "https://img.hellofresh.com/f_auto,fl_lossy,q_auto,w_1200/hellofresh_s3/image/roasted-veggie-lentil-jumble-69bfec2c-16875e0b.jpg",
     },
 ];

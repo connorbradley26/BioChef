@@ -1,5 +1,7 @@
 // TODO: Make this an actual type, by connecting to API and DB to get proper data. This is just dummy data for now.
 
+import Link from "next/link";
+
 type MealPlan = {
     id: number;
     name: string;
@@ -18,7 +20,9 @@ export default function Meal({meal} : {meal: MealPlan}) {
                     <h2 className="card-title">{meal.name}</h2>
                     <p className="card-subtitle">{meal.description}</p>
                     <div className="justify-end card-actions">
-                        <button className="pointer-events-auto btn btn-primary">Edit</button>
+                        <Link href={`/individual-meal/${meal.id}`}>
+                            <button className="pointer-events-auto btn btn-primary">Edit</button>
+                        </Link>
                     </div>
                 </div>
 
