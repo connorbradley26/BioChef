@@ -9,7 +9,7 @@ type MealPlan = {
 
 export default function Meal({meal} : {meal: MealPlan}) {
     return (
-        <li className="mx-10 ">
+        <li className="mx-10 carousel-item">
             <div className="shadow-xl card w-96 bg-base-100">
                 <figure>
                     <img src={meal.image} alt={meal.name} className="pointer-events-none" />

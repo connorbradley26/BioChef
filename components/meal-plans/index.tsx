@@ -44,7 +44,7 @@ export default  function MealPlans({mealPlans, eatingTime} : MealPlanProps) {
     return (
         <>
             <h1 className="mx-10 mt-20 mb-10 text-xl ">{eatingTime}</h1>
-            <ul className="flex overflow-x-scroll select-none scroll-smooth scrollbar-hide" onMouseDown={handleMouseDown} onMouseUp={handleMouseUp} ref={ref} onMouseMove={onMouseMove}>
+            <ul className="flex overflow-x-scroll select-none scroll-smooth scrollbar-hide carousel" onMouseDown={handleMouseDown} onMouseUp={handleMouseUp} ref={ref} onMouseMove={onMouseMove}>
 
                 {mealPlans.map((mealPlan) => (
                     <Meal meal={mealPlan} key={mealPlan.id} />

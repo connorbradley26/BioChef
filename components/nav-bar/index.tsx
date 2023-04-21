@@ -1,6 +1,7 @@
 import Link from "next/link";
 import UserAuth from "./user-auth";
 import type { User } from "next-auth";
+import Image from "next/image";
 
 export default function NavBar({ user }: { user?: User }) {
     let navBarItems = [];
@@ -64,7 +65,10 @@ export default function NavBar({ user }: { user?: User }) {
                         })}
                     </ul>
                 </div>
-                <div className="ml-4 text-xl normal-case">BioChef</div>
+                <div className="flex items-center h-full ml-4 text-xl normal-case">
+                    <Image src="/biochef-transparent.png" alt="Bio Chef Logo" width={40} height={40}/>
+                    <p className="ml-3 ">BioChef</p>
+                </div>
             </div>
             {/* Desktop */}
             <div className="hidden navbar-center lg:flex">
