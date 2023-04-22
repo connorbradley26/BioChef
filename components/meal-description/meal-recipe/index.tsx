@@ -1,21 +1,22 @@
 import { mealPlans } from "@/types";
+import { AnalyzedInstruction, Step } from "@/types/Spoonacular/GetRecipeByID";
 
 interface MealRecipeProps {
-    recipe: mealPlans["instructions"];
+    steps: Step[];
 }
 
-export default function MealRecipe({ recipe }: MealRecipeProps) {
+export default function MealRecipe({ steps }: MealRecipeProps) {
 
     return (
         <div className="mt-4">
             <h3 className="text-xl font-bold">Recipe</h3>
-            <ol className="text-lg">
-                {recipe.map((step) => (
-                    <li key={step.id} className="flex">
-                        <p className="mr-2">{step.step}</p>
+            <ul className="steps steps-vertical">
+                {steps.map((step) => (
+                    <li key={step.number} className="step">
+                        {step.step}
                     </li>
                 ))}
-            </ol>
+            </ul>
         </div>
     );
 

@@ -3,6 +3,7 @@ import Image from "next/image";
 import Meal from "./meal-card";
 import type { mealPlans as MealPlanType } from "@/types";
 import { useRef, useState } from "react";
+import Link from "next/link";
 
 type MealPlanProps = {
     mealPlans: MealPlanType[];
@@ -37,7 +38,8 @@ export default function MealPlans({ mealPlans, eatingTime }: MealPlanProps) {
             ref.current.scrollLeft = scrollX - e.clientX + clientX;
         }
     };
-
+    const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+    const todaysDay = new Date().getDay();
     // TODO: Get meal plans from database
 
     return (
@@ -49,9 +51,16 @@ export default function MealPlans({ mealPlans, eatingTime }: MealPlanProps) {
                 onMouseUp={handleMouseUp}
                 ref={ref}
                 onMouseMove={onMouseMove}>
-                {mealPlans.map((mealPlan) => (
-                    <Meal meal={mealPlan} key={mealPlan.id} />
-                ))}
+                {/* {mealPlans.map((mealPlan, index) => (
+                    <Meal meal={mealPlan} key={mealPlan.id} day={days[(todaysDay + index) % 7]} />
+                ))} */}
+                 <li className="mx-10 my-10 carousel-item">
+                    <div className="shadow card w-96 bg-base-200">
+                        <Link href="/add-new-meals">
+                            <button className="btn btn-secondary card-body">Add New </button>
+                        </Link>
+                    </div>
+                </li>
             </ul>
         </>
     );

@@ -102,19 +102,19 @@ model UserNutritionalStats {
   userId            String
   createdAt         DateTime @default(now()) @map(name: "created_at")
   updatedAt         DateTime @default(now()) @map(name: "updated_at")
-  weight            Int
-  height            Int
-  age               Int
-  restingHeartRate  Int
-  Cholesterol       String
-  bodyFatPercentage Int
-  vitaminD          Int
-  vitaminB12        Int
-  vitaminB6         Int
-  vitaminC          Int
-  testosterone      Int
-  hbA1c             Int
-  goal              String
+  weight            Int?
+  height            Int?
+  age               Int?
+  restingHeartRate  Int?
+  Cholesterol       String?
+  bodyFatPercentage Int?
+  vitaminD          Int?
+  vitaminB12        Int?
+  vitaminB6         Int?
+  vitaminC          Int?
+  testosterone      Int?
+  hbA1c             Int?
+  goal              String?
   User              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   // User      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 

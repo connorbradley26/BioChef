@@ -1,214 +1,113 @@
+import { RouterInputs, api } from "@/lib/api";
 import { faFloppyDisk } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Field, Form, Formik } from "formik";
+import { useSession } from "next-auth/react";
+import NutritionInputField from "./nutrition-input-field";
+import { useRouter } from "next/router";
+type FormValues =
+    RouterInputs["userNutritionalStats"]["saveUserNutritionalStats"];
+
 
 export default function NutritionInfoUpdate() {
-    const save = () => {
-        console.log("Save");
+    const saveUserMutation =
+        api.userNutritionalStats.saveUserNutritionalStats.useMutation();
+    const session = useSession();
+    const router = useRouter();
+
+    if (session.data == null) {
+        return <div>Not authenticated</div>;
+    }
+
+    const initialValues: FormValues = {
+        userId: session.data.user.id,
+    };
+
+    const save = async (values: FormValues) => {
+        await saveUserMutation.mutateAsync({
+            ...values,
+            userId: session.data.user.id,
+        });
     };
 
     return (
         <>
-            <div className="p-4 mx-4 my-10 shadow bg-base-200 rounded-box">
-                {/* Basic stuff */}
-                <h1 className="text-3xl font-bold">
-                    Basic Information
-                </h1>
-                <div className="grid grid-cols-1 gap-6 md:m-10 md:grid-cols-2 lg:grid-cols-3">
-                    {/* Weight */}
-                    <div className="form-control">
-                        <label className="label">
-                            <span className="label-text">Weight</span>
-                        </label>
-                        <label className="input-group">
-                            <input
-                                type="text"
-                                placeholder="200"
-                                className="input input-bordered"
-                            />
-                            <span>Lbs</span>
-                        </label>
-                    </div>
+            <Formik
+                initialValues={initialValues}
+                validate={(values) => {
+                    const errors = {};
+                    return errors;
+                }}
+                onSubmit={async (values, { setSubmitting }) => {
+                    await save(values);
+                    setSubmitting(false);
+                    
+                    router.push("/nutritional-information");
+                }}>
+                {({ isSubmitting }) => (
+                    <Form>
+                        {isSubmitting ? (
+                            <div>Submitting...</div>
+                        ) : (
+                            <>
+                                <div className="rounded-box mx-4 my-10 bg-base-200 p-4 shadow">
+                                    {/* Basic stuff */}
+                                    <h1 className="text-3xl font-bold">
+                                        Basic Information
+                                    </h1>
+                                    <div className="grid grid-cols-1 gap-6 md:m-10 md:grid-cols-2 lg:grid-cols-3">
+                                        {/* Weight */}
+                                        <NutritionInputField name="weight" type="number" placeholder="200" unit="lbs" label="Weight" />
+                                        {/* Height */}
+                                        <NutritionInputField name="height" type="number" placeholder="182" unit="cm" label="Height" />
+                                        {/* Age */}
+                                        <NutritionInputField name="age" type="number" placeholder="30" unit="Years" label="Age" />
+                                        {/* Resting Heart Rate */}
+                                        <NutritionInputField name="restingHeartRate" type="number" placeholder="70" unit="BPM" label="Resting Heart Rate" />
+                                    </div>
+                                </div>
 
-                    {/* Height */}
-                    <div className="form-control">
-                        <label className="label">
-                            <span className="label-text">Height</span>
-                        </label>
-                        <label className="input-group">
-                            <input
-                                type="text"
-                                placeholder="182"
-                                className="input input-bordered"
-                            />
-                            <span>CM</span>
-                        </label>
-                    </div>
-
-                    {/* Age */}
-                    <div className="form-control">
-                        <label className="label">
-                            <span className="label-text">Age</span>
-                        </label>
-                        <label className="input-group">
-                            <input
-                                type="text"
-                                placeholder="30"
-                                className="input input-bordered"
-                            />
-                            <span>Years</span>
-                        </label>
-                    </div>
-
-                    {/* Resting Heart Rate */}
-                    <div className="form-control">
-                        <label className="label">
-                            <span className="label-text">
-                                Resting Heart Rate
-                            </span>
-                        </label>
-                        <label className="input-group">
-                            <input
-                                type="text"
-                                placeholder="70"
-                                className="input input-bordered"
-                            />
-                            <span>BPM</span>
-                        </label>
-                    </div>
-                </div>
-            </div>
-
-            <div className="p-4 mx-4 shadow bg-base-200 rounded-box">
-                <h1 className="text-3xl font-bold">Detailed Information</h1>
-                <div className="grid grid-cols-1 gap-6 m-10 md:grid-cols-2 lg:grid-cols-3">
-                    {/* Cholesterol */}
-                    <div className="form-control">
-                        <label className="label">
-                            <span className="label-text">Cholesterol</span>
-                        </label>
-                        <label className="input-group">
-                            <input
-                                type="text"
-                                placeholder="70"
-                                className="input input-bordered"
-                            />
-                            <span>mg/dL</span>
-                        </label>
-                    </div>
-
-                    {/* Body Fat Percentage */}
-                    <div className="form-control">
-                        <label className="label">
-                            <span className="label-text">
-                                Body Fat Percentage
-                            </span>
-                        </label>
-                        <label className="input-group">
-                            <input
-                                type="text"
-                                placeholder="20"
-                                className="input input-bordered"
-                            />
-                            <span>%</span>
-                        </label>
-                    </div>
-
-                    {/* Vitamin D */}
-                    <div className="form-control">
-                        <label className="label">
-                            <span className="label-text">Vitamin D</span>
-                        </label>
-                        <label className="input-group">
-                            <input
-                                type="text"
-                                placeholder="20"
-                                className="input input-bordered"
-                            />
-                            <span>mcg</span>
-                        </label>
-                    </div>
-
-                    {/* Vitamin B12 */}
-                    <div className="form-control">
-                        <label className="label">
-                            <span className="label-text">Vitamin B12</span>
-                        </label>
-                        <label className="input-group">
-                            <input
-                                type="text"
-                                placeholder="20"
-                                className="input input-bordered"
-                            />
-                            <span>mcg</span>
-                        </label>
-                    </div>
-
-                    {/* Vitamin B6 */}
-                    <div className="form-control">
-                        <label className="label">
-                            <span className="label-text">Vitamin B6</span>
-                        </label>
-                        <label className="input-group">
-                            <input
-                                type="text"
-                                placeholder="20"
-                                className="input input-bordered"
-                            />
-                            <span>mcg</span>
-                        </label>
-                    </div>
-
-                    {/* Vitamin C */}
-                    <div className="form-control">
-                        <label className="label">
-                            <span className="label-text">Vitamin C</span>
-                        </label>
-                        <label className="input-group">
-                            <input
-                                type="text"
-                                placeholder="20"
-                                className="input input-bordered"
-                            />
-                            <span>mcg</span>
-                        </label>
-                    </div>
-
-                    {/* Testosterone */}
-                    <div className="form-control">
-                        <label className="label">
-                            <span className="label-text">Testosterone</span>
-                        </label>
-                        <label className="input-group">
-                            <input
-                                type="text"
-                                placeholder="20"
-                                className="input input-bordered"
-                            />
-                            <span>mcg</span>
-                        </label>
-                    </div>
-
-                    {/* HbA1c */}
-                    <div className="form-control">
-                        <label className="label">
-                            <span className="label-text">HbA1c</span>
-                        </label>
-                        <label className="input-group">
-                            <input
-                                type="text"
-                                placeholder="20"
-                                className="input input-bordered"
-                            />
-                            <span>mcg</span>
-                        </label>
-                    </div>
-                </div>
-            </div>
-            <div className="fixed rounded-full tooltip bottom-3 right-3 " data-tip="Save">
-                <button className="shadow-2xl btn btn-primary" onClick={save}>
-                    <FontAwesomeIcon icon={faFloppyDisk} className="text-3xl "/>
-                </button>
-            </div>
+                                <div className="rounded-box mx-4 bg-base-200 p-4 shadow">
+                                    <h1 className="text-3xl font-bold">
+                                        Detailed Information
+                                    </h1>
+                                    <div className="m-10 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+                                        {/* Cholesterol */}
+                                        <NutritionInputField name="cholesterol" type="text" placeholder="120/58" unit="mg/dL" label="Cholesterol" />
+                                        {/* Body Fat Percentage */}
+                                        <NutritionInputField name="bodyFatPercentage" type="number" placeholder="20" unit="%" label="Body Fat Percentage" />
+                                        {/* Vitamin D */}
+                                        <NutritionInputField name="vitaminD" type="number" placeholder="20" unit="mcg" label="Vitamin D" />
+                                        {/* Vitamin B12 */}
+                                        <NutritionInputField name="vitaminB12" type="number" placeholder="20" unit="mcg" label="Vitamin B12" />
+                                        {/* Vitamin B6 */}
+                                        <NutritionInputField name="vitaminB6" type="number" placeholder="20" unit="mcg" label="Vitamin B6" />
+                                        {/* Vitamin C */}
+                                        <NutritionInputField name="vitaminC" type="number" placeholder="20" unit="mcg" label="Vitamin C" />
+                                        {/* Testosterone */}
+                                        <NutritionInputField name="testosterone" type="number" placeholder="20" unit="mcg" label="Testosterone" />
+                                        {/* HbA1c */}
+                                        <NutritionInputField name="hbA1c" type="number" placeholder="20" unit="%" label="HbA1c" />
+                                    </div>
+                                </div>
+                                <div
+                                    className="tooltip fixed bottom-3 right-3 rounded-full "
+                                    data-tip="Save">
+                                    <button
+                                        type="submit"
+                                        disabled={isSubmitting}
+                                        className="btn-primary btn shadow-2xl">
+                                        <FontAwesomeIcon
+                                            icon={faFloppyDisk}
+                                            className="text-3xl "
+                                        />
+                                    </button>
+                                </div>
+                            </>
+                        )}
+                    </Form>
+                )}
+            </Formik>
         </>
     );
 }

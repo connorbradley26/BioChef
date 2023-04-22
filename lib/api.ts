@@ -46,6 +46,8 @@ export const api = createTRPCNext<AppRouter, SSRContext>({
        */
       transformer: superjson,
 
+      refetchOnWindowFocus: false,
+
       /**
        * Links used to determine request flow from client to server.
        *
@@ -82,6 +84,7 @@ export const api = createTRPCNext<AppRouter, SSRContext>({
     };
   
   },
+  
     /**
    * @link https://trpc.io/docs/ssr
    */

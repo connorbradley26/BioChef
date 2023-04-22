@@ -18,3 +18,24 @@ export type mealPlans = {
     nutrition: { calories: number, fat: number, carbs: number, protein: number },
     image: string,
 }
+
+export type chartData = {
+    labels: string[],
+    datasets: dataset[]
+}
+
+export type dataset = {
+    type: string,
+    data: number[] | string[]
+}
+
+export type spoonacularMeal = {
+    id: number,
+    calories: number,
+    carbs: string,
+    fat: string,
+    protein: string,
+    title: string,
+    image: string,
+    imageType: string,
+}

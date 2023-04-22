@@ -1,23 +1,29 @@
-"use client"
+
 import React, { useEffect } from 'react';
 import Chart from 'chart.js/auto';
+import { dataset } from '@/types';
 
-export default function NutritionalBox() {
+interface NutritionalBoxProps {
+    labels: string[],
+    data: dataset
+}
+
+const NutritionalBox = ({ labels, data }: NutritionalBoxProps) => {
 
     const chartRef = React.useRef<HTMLCanvasElement>(null);
 
     useEffect(() => {
-        if (chartRef.current == null) return;
+        if (chartRef.current == null || !data) return;
         var ctx = chartRef.current.getContext('2d');
         if (ctx == null) return;
         var myChart = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: ["11/04/23", "11/05/23", "11/06/23", "11/07/23", "11/08/23", "11/09/23", "11/10/23"],
+                labels: labels,
                 datasets: [{
-                    data: [205, 201, 197, 198, 193, 189, 185],
+                    data: data.data,
                     borderColor: "rgb(62,149,205)",
-                    backgroundColor: "rgb(62,149,205,0.1)",
+                    backgroundColor: "#rgb(242, 242, 242)",
                     
                 }
                 ]
@@ -29,19 +35,30 @@ export default function NutritionalBox() {
                     },
                     title: {
                         display: true,
-                        text: 'Weight (lbs)'
+                        text: data.type
                     }
                 },
-                maintainAspectRatio: false
-            }
+                elements: {
+                    line: {
+                        spanGaps: true
+                    }
+                },
+                
+            },
+            
         });
-    }, [])
+        return () => {
+            myChart.destroy();
+        }
+    }, [data, labels])
 
 
     return (
-        <div className="p-4 h-[200px] bg-base-100 rounded-box relative">
+        <div className="relative p-4 bg-base-100 rounded-box">
             <canvas className="" ref={chartRef} />
       </div>
 
     )
 }
+
+export default NutritionalBox;
