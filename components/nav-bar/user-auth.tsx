@@ -1,20 +1,21 @@
-"use client";
-import { signIn, signOut } from "next-auth/react";
-import type { User } from "next-auth";
+
+import { signIn, signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 
-export default function UserAuth({ user }: { user?: User }) {
+export default function UserAuth() {
+
+    const { data: session } = useSession();
     // If user is signed in, show their avatar and a logout button
-    if (user) {
+    if (session) {
         return (
             <div className="relative mr-2 dropdown ">
                 <label className="avatar">
                     <div
                         tabIndex={0}
                         className="rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-                        {user.image ? (
+                        {session.user.image ? (
                             <Image
-                                src={user.image}
+                                src={session.user.image}
                                 alt="Your Avatar"
                                 width={30}
                                 height={30}

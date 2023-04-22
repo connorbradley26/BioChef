@@ -1,7 +1,9 @@
 import NutritionalBox from "@/components/nutritional-box";
 import YourNeedsBox from "@/components/your-needs-box";
+import { NextPageWithLayout } from "../_app";
+import RootLayout from "../layout";
 
-export default async function Page() {
+const NutritionalInformation: NextPageWithLayout = () => {
     return (
         <main className="grid grid-cols-1 gap-6 px-10 mx-auto mt-10 md:grid-cols-3">
             <div className="md:col-span-2 rounded-box">
@@ -26,3 +28,9 @@ export default async function Page() {
         </main>
     );
 }
+
+NutritionalInformation.getLayout = (page) => {
+    return <RootLayout>{page}</RootLayout>
+}
+
+export default NutritionalInformation;

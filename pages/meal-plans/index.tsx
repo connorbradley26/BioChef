@@ -1,8 +1,10 @@
 import MealPlans from "@/components/meal-plans/index";
 import { mealPlans } from "@/dummydata/MealPlans";
+import { NextPageWithLayout } from "../_app";
+import RootLayout from "../layout";
 
 
-export default async function Page() {
+const MealPlansPage: NextPageWithLayout = () => {
 
     return (
         <main className="">
@@ -13,3 +15,8 @@ export default async function Page() {
     )
 }
 
+MealPlansPage.getLayout = function getLayout(page) {
+    return <RootLayout>{page}</RootLayout>
+}
+
+export default MealPlansPage;

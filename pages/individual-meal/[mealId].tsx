@@ -2,17 +2,19 @@ import MealDescription from "@/components/meal-description";
 import MealImage from "@/components/meal-image";
 import MealNutritionInfo from "@/components/meal-nutrition-info";
 import { mealPlans } from "@/dummydata/MealPlans"
-async function getMealFromId(mealId: number) {
-    const meals = await mealPlans;
+import { NextPageWithLayout } from "@/pages/_app";
+import RootLayout from "@/pages/layout";
+import { useRouter } from "next/router";
+
+ function getMealFromId(mealId: number) {
+    const meals = mealPlans;
     return meals.find(meal => meal.id === mealId);
 }
 
-type IndividalMealProps = {
-    params: {mealId: string}
-}
+const IndividualMeal: NextPageWithLayout = () => {
+    const mealId = useRouter().query.mealId as string;
 
-export default async function Page({params} : IndividalMealProps) {
-    const meal = await getMealFromId(parseInt(params.mealId));
+    const meal = getMealFromId(parseInt(mealId));
 
     if (!meal) {
         return <div>Meal not found</div>
@@ -32,3 +34,9 @@ export default async function Page({params} : IndividalMealProps) {
     )
     
 }
+
+IndividualMeal.getLayout = (page) => {
+    return <RootLayout>{page}</RootLayout>
+}
+
+export default IndividualMeal;

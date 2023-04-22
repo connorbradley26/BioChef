@@ -1,12 +1,14 @@
-import { getCurrentUser } from "@/lib/session";
-import { User } from "next-auth";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function Hero({user}: {user?: User}) {
+const Hero = () => {
+
+    const user = useSession();
 
     return (
         <div className="min-h-[calc(100vh_-_4rem)] hero ">
+            <pre>{JSON.stringify(user, null, 2)}</pre>
             <div className="text-center hero-content">
                 <div className="max-w-md">
                     <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-primary before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-neutral after:via-secondary after:blur-3xl after:content-[''] ">
@@ -45,3 +47,5 @@ export default function Hero({user}: {user?: User}) {
         </div>
     );
 }
+
+export default Hero;

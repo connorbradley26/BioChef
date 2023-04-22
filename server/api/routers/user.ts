@@ -7,7 +7,7 @@ import {
 
 export const userRouter = createTRPCRouter({
     getAll: protectedProcedure.query(async ({ctx}) => {
-        const user = await ctx.db.user.findMany();
+        const user = await ctx.prisma.user.findMany();
         if (!user) {
             throw new TRPCError({
                 code: 'NOT_FOUND',

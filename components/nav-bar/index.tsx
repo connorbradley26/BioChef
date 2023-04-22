@@ -1,10 +1,12 @@
 import Link from "next/link";
 import UserAuth from "./user-auth";
-import type { User } from "next-auth";
 import Image from "next/image";
+import { useSession } from "next-auth/react";
 
-export default function NavBar({ user }: { user?: User }) {
+export default function NavBar() {
     let navBarItems = [];
+    const { data: user } = useSession();
+
     if (!user) {
         navBarItems = [
             {
@@ -83,7 +85,7 @@ export default function NavBar({ user }: { user?: User }) {
                 </ul>
             </div>
             <div className="navbar-end">
-                <UserAuth user={user} />
+                <UserAuth />
             </div>
         </div>
     );
