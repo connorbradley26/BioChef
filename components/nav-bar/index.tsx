@@ -69,7 +69,7 @@ export default function NavBar() {
                 </div>
                 <div className="flex items-center h-full ml-4 text-xl normal-case">
                     <Image src="/biochef-transparent.png" alt="Bio Chef Logo" width={40} height={40}/>
-                    <p className="ml-3 ">BioChef</p>
+                    <p className="ml-3 font-bold">BioChef</p>
                 </div>
             </div>
             {/* Desktop */}
