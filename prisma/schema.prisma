@@ -43,16 +43,17 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String?   @unique
-  emailVerified DateTime?
-  image         String?
-  createdAt     DateTime  @default(now()) @map(name: "created_at")
-  updatedAt     DateTime  @default(now()) @map(name: "updated_at")
-  meals         Meal[]
-  accounts      Account[]
-  sessions      Session[]
+  id                   String                 @id @default(cuid())
+  name                 String?
+  email                String?                @unique
+  emailVerified        DateTime?
+  image                String?
+  createdAt            DateTime               @default(now()) @map(name: "created_at")
+  updatedAt            DateTime               @default(now()) @map(name: "updated_at")
+  meals                Meal[]
+  accounts             Account[]
+  sessions             Session[]
+  UserNutritionalStats UserNutritionalStats[]
 
   @@map(name: "users")
 }
@@ -94,4 +95,28 @@ model MealNutritionalInformation {
   Meal      Meal[]
 
   @@map(name: "meal_nutritional_information")
+}
+
+model UserNutritionalStats {
+  id                String   @id @default(cuid())
+  userId            String
+  createdAt         DateTime @default(now()) @map(name: "created_at")
+  updatedAt         DateTime @default(now()) @map(name: "updated_at")
+  weight            Int
+  height            Int
+  age               Int
+  restingHeartRate  Int
+  Cholesterol       String
+  bodyFatPercentage Int
+  vitaminD          Int
+  vitaminB12        Int
+  vitaminB6         Int
+  vitaminC          Int
+  testosterone      Int
+  hbA1c             Int
+  goal              String
+  User              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  // User      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map(name: "user_nutritional_stats")
 }
