@@ -1,6 +1,6 @@
 
 import Image from "next/image";
-import Meal from "./meal-card";
+import MealCard from "./meal-card";
 import type { mealPlans as MealPlanType } from "@/types";
 import { useRef, useState } from "react";
 import Link from "next/link";
