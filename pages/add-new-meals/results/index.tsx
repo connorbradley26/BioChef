@@ -51,8 +51,8 @@ const Results: NextPageWithLayout = () => {
         return ingredients;
     }
 
-    const convertNutrition = (recipe: GetRecipeByID): CreateMeal["mealNutritionInformation"] => {
-        let nutrition: CreateMeal["mealNutritionInformation"] = {
+    const convertNutrition = (recipe: GetRecipeByID): CreateMeal["nutrition"] => {
+        let nutrition: CreateMeal["nutrition"] = {
             calories: 0,
             protein: 0,
             fat: 0,
@@ -76,7 +76,7 @@ const Results: NextPageWithLayout = () => {
     }
 
     return (
-        <div>
+        <div className="flex flex-wrap justify-around gap-10 mt-10">
             {meals && meals.results.length > 0 ? ( 
                 meals.results.map((meal: GetRecipeByID) => {
                     const steps = convertSteps(meal);
@@ -86,7 +86,7 @@ const Results: NextPageWithLayout = () => {
                         spoonacularId: meal.id,
                         steps: steps,
                         ingredients: convertIngredients(meal),
-                        mealNutritionInformation: convertNutrition(meal),
+                        nutrition: convertNutrition(meal),
                         userId: session.data.user.id,
                         image: meal.image || "https://via.placeholder.com/300",
                         servedAtDay: dayjs(day).toDate(),
@@ -103,7 +103,6 @@ const Results: NextPageWithLayout = () => {
             ) : (
                 <h1>No meals found</h1>
             )}
-            <pre>{JSON.stringify(meals, null, 2)}</pre>
         </div>
     )
 }

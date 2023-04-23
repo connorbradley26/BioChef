@@ -68,19 +68,19 @@ model VerificationToken {
 }
 
 model Meal {
-  id                         String                      @id @default(cuid())
-  name                       String
-  createdAt                  DateTime                    @default(now()) @map(name: "created_at")
-  updatedAt                  DateTime                    @default(now()) @map(name: "updated_at")
-  servedAtDay                DateTime                    @default(now()) @map(name: "serverdAtDay")
-  servedAtTime               String
-  steps                      String[]
-  ingredients                Ingredients[]
-  mealNutritionalInformation MealNutritionalInformation?
-  Users                      User[]
-  userId                     String?
-  image                      String
-  spoonacularId              Int
+  id            String                      @id @default(cuid())
+  name          String
+  createdAt     DateTime                    @default(now()) @map(name: "created_at")
+  updatedAt     DateTime                    @default(now()) @map(name: "updated_at")
+  servedAtDay   DateTime                    @default(now()) @map(name: "serverdAtDay")
+  servedAtTime  String
+  steps         String[]
+  ingredients   Ingredients[]
+  nutrition     MealNutritionalInformation?
+  Users         User[]
+  userId        String?
+  image         String
+  spoonacularId Int
 
   @@map(name: "meals")
 }

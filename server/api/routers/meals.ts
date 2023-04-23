@@ -4,6 +4,7 @@ import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
 import { spoonacularMeal } from "@/types";
 import { GetRecipeByID } from "@/types/Spoonacular/GetRecipeByID";
 import { Ingredients } from "@prisma/client";
+import { getMealsByComplexQueryInput, getMealsByComplexQueryOutput } from "../zodTypes/getMealsByComplexQuery";
 
 export const mealRouter = createTRPCRouter({
     getAllByUserId: protectedProcedure
@@ -63,42 +64,28 @@ export const mealRouter = createTRPCRouter({
         }),
 
     getMealsByComplexQuery: protectedProcedure
-        .input(
-            z.object({
-                query: z.string().min(1).optional(),
-                maxCalories: z.number().min(0).max(2000).optional(),
-                minCalories: z.number().min(0).max(2000).optional(),
-                maxCarbs: z.number().min(0).max(2000).optional(),
-                minCarbs: z.number().min(0).max(2000).optional(),
-                maxFat: z.number().min(0).max(2000).optional(),
-                minFat: z.number().min(0).max(2000).optional(),
-                maxProtein: z.number().min(0).max(2000).optional(),
-                minProtein: z.number().min(0).max(2000).optional(),
-                type: z.string().min(1).optional(),
-                cuisine: z.string().min(1).optional(),
-            })
-        )
+        .input(getMealsByComplexQueryInput)
         .query(async ({ ctx, input }) => {
-            const url = new URL(
-                "https://api.spoonacular.com/recipes/complexSearch"
-            );
-            url.searchParams.append(
-                "apiKey",
-                process.env.SPOONACULAR_API_KEY as string
-            );
+
+            // Build URL
+            const url = new URL("https://api.spoonacular.com/recipes/complexSearch");
+            
             for (const [key, value] of Object.entries(input)) {
                 if (value) {
                     url.searchParams.append(key, value as string);
                 }
             }
+
+            url.searchParams.append("apiKey", process.env.SPOONACULAR_API_KEY as string);
             url.searchParams.append("addRecipeNutrition", "true");
             url.searchParams.append("number", "10");
 
+            // Fetch data
             const meals = await fetch(url)
                 .then((response) => response.json())
                 .then((data) => {
-                    console.log("getMealsByComplexQuery", data);
-                    return data as GetRecipeByID[];
+                    const parsedData = getMealsByComplexQueryOutput.parse(data);
+                    return parsedData;
                 });
             return meals;
         }),
@@ -120,7 +107,7 @@ export const mealRouter = createTRPCRouter({
                         unit: z.string(),
                     })
                 ),
-                mealNutritionInformation: z.object({
+                nutrition: z.object({
                     calories: z.number(),
                     carbs: z.number(),
                     fat: z.number(),
@@ -145,12 +132,12 @@ export const mealRouter = createTRPCRouter({
                             };
                         }),
                     },
-                    mealNutritionalInformation: {
+                    nutrition: {
                         create: {
-                            calories: input.mealNutritionInformation.calories,
-                            carbs: input.mealNutritionInformation.carbs,
-                            fat: input.mealNutritionInformation.fat,
-                            protein: input.mealNutritionInformation.protein,
+                            calories: input.nutrition.calories,
+                            carbs: input.nutrition.carbs,
+                            fat: input.nutrition.fat,
+                            protein: input.nutrition.protein,
                         },
                     },
                     image: input.image,
@@ -180,7 +167,7 @@ export const mealRouter = createTRPCRouter({
                     },
                 },
                 include: {
-                    mealNutritionalInformation: true,
+                    nutrition: true,
                     ingredients: true,
                 },
             });
