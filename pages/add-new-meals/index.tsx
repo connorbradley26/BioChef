@@ -1,3 +1,4 @@
+import NutritionRemainingBox from "@/components/NutritionRemainingBox";
 import { RouterInputs, api } from "@/lib/api";
 import { NextPageWithLayout } from "@/pages/_app";
 import RootLayout from "@/pages/layout";
@@ -63,7 +64,8 @@ const IndividualMeal: NextPageWithLayout = () => {
     );
 
     return (
-        <div className="flex flex-col items-center justify-center w-full h-full">
+        <div className="flex items-center justify-center w-full h-full gap-20 mt-10">
+            <div className="grid grid-cols-2 gap-4">
             <Formik
                 initialValues={values}
                 onSubmit={(values) => {
@@ -195,6 +197,8 @@ const IndividualMeal: NextPageWithLayout = () => {
                     </button>
                 </Form>
             </Formik>
+            <NutritionRemainingBox />
+            </div>
         </div>
     );
 };
