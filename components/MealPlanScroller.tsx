@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import MealCard from "../MealCard/MealCard";
+import MealCard from "./MealCard/MealCard";
 import dayjs from "dayjs";
 import { api } from "@/lib/api";
 import { useSession } from "next-auth/react";
@@ -8,7 +8,7 @@ interface MealPlanProps {
     eatingTime: string;
 }
 
-export default function MealPlans({ eatingTime }: MealPlanProps) {
+export default function MealPlanScroller({ eatingTime }: MealPlanProps) {
     const [isScrolling, setIsScrolling] = useState(false);
     const [clientX, setClientX] = useState(0);
     const [scrollX, setScrollX] = useState(0);

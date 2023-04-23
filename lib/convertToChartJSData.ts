@@ -1,6 +1,7 @@
 import { chartData } from "@/types";
 import { UserNutritionalStats } from "@prisma/client";
 
+// TODO implement this
 const PrettyNamedStats = {
     weight: "Weight",
     height: "Height",

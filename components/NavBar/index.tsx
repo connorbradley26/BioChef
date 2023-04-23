@@ -1,5 +1,5 @@
 import Link from "next/link";
-import UserAuth from "./user-auth";
+import LoginButton from "./LoginButton";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
 
@@ -85,7 +85,7 @@ export default function NavBar() {
                 </ul>
             </div>
             <div className="navbar-end">
-                <UserAuth />
+                <LoginButton />
             </div>
         </div>
     );

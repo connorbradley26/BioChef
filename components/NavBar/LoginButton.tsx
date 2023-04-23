@@ -2,7 +2,7 @@
 import { signIn, signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 
-export default function UserAuth() {
+export default function LoginButton() {
 
     const { data: session } = useSession();
     // If user is signed in, show their avatar and a logout button

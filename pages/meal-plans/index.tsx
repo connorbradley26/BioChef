@@ -1,4 +1,4 @@
-import MealPlans from "@/components/meal-plans/index";
+import MealPlanScroller from "@/components/MealPlanScroller";
 import { NextPageWithLayout } from "../_app";
 import RootLayout from "../layout";
 import { api } from "@/lib/api";
@@ -8,9 +8,9 @@ const MealPlansPage: NextPageWithLayout = () => {
 
     return (
         <main className="">
-            <MealPlans eatingTime="Breakfast"/>
-            <MealPlans eatingTime="Lunch"/>
-            <MealPlans eatingTime="Dinner"/>
+            <MealPlanScroller eatingTime="Breakfast"/>
+            <MealPlanScroller eatingTime="Lunch"/>
+            <MealPlanScroller eatingTime="Dinner"/>
         </main>
     )
 }
