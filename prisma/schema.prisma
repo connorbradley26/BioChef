@@ -68,32 +68,46 @@ model VerificationToken {
 }
 
 model Meal {
-  id                           String                      @id @default(cuid())
-  name                         String
-  createdAt                    DateTime                    @default(now()) @map(name: "created_at")
-  updatedAt                    DateTime                    @default(now()) @map(name: "updated_at")
-  servedAt                     DateTime                    @map(name: "served_at")
-  steps                        String[]
-  ingredients                  String[]
-  mealNutritionalInformation   MealNutritionalInformation? @relation(fields: [mealNutritionalInformationId], references: [id])
-  Users                        User[]
-  userId                       String?
-  mealNutritionalInformationId String?
-  image                        String
+  id                         String                      @id @default(cuid())
+  name                       String
+  createdAt                  DateTime                    @default(now()) @map(name: "created_at")
+  updatedAt                  DateTime                    @default(now()) @map(name: "updated_at")
+  servedAtDay                DateTime                    @default(now()) @map(name: "serverdAtDay")
+  servedAtTime               String
+  steps                      String[]
+  ingredients                Ingredients[]
+  mealNutritionalInformation MealNutritionalInformation?
+  Users                      User[]
+  userId                     String?
+  image                      String
+  spoonacularId              Int
 
   @@map(name: "meals")
 }
 
+model Ingredients {
+  id        String   @id @default(cuid())
+  meal      Meal     @relation(fields: [mealId], references: [id])
+  createdAt DateTime @default(now()) @map(name: "created_at")
+  updatedAt DateTime @default(now()) @map(name: "updated_at")
+  name      String
+  amount    Float
+  unit      String
+  mealId    String
+
+  @@map(name: "ingredients")
+}
+
 model MealNutritionalInformation {
   id        String   @id @default(cuid())
-  mealId    String
+  mealId    String   @unique
+  meal      Meal     @relation(fields: [mealId], references: [id])
   createdAt DateTime @default(now()) @map(name: "created_at")
   updatedAt DateTime @default(now()) @map(name: "updated_at")
   calories  Int
   fat       Int
   protein   Int
   carbs     Int
-  Meal      Meal[]
 
   @@map(name: "meal_nutritional_information")
 }

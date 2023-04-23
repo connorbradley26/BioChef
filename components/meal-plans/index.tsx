@@ -1,19 +1,34 @@
-import Image from "next/image";
-import type { mealPlans as MealPlanType } from "@/types";
 import { useRef, useState } from "react";
-import Link from "next/link";
+import MealCard from "../MealCard/MealCard";
+import dayjs from "dayjs";
+import { api } from "@/lib/api";
+import { useSession } from "next-auth/react";
 
-type MealPlanProps = {
-    mealPlans: MealPlanType[];
-    //TODO type this
+interface MealPlanProps {
     eatingTime: string;
-};
+}
 
-export default function MealPlans({ mealPlans, eatingTime }: MealPlanProps) {
+export default function MealPlans({ eatingTime }: MealPlanProps) {
     const [isScrolling, setIsScrolling] = useState(false);
     const [clientX, setClientX] = useState(0);
     const [scrollX, setScrollX] = useState(0);
     const ref = useRef<HTMLUListElement>(null);
+    const session = useSession();
+    const mealPlan = api.meals.getMealsByDateRange.useQuery(
+        {
+            dateFrom: new Date(dayjs().format("YYYY-MM-DD")),
+            dateTo: new Date(dayjs().add(7, "day").format("YYYY-MM-DD")),
+        },
+        { refetchOnWindowFocus: false, refetchOnMount: false}
+    );
+
+    if (!session?.data?.user?.id) {
+        return (
+            <div>
+                <h1>Not logged in</h1>
+            </div>
+        );
+    }
 
     const handleMouseDown = (
         e: React.MouseEvent<HTMLUListElement, MouseEvent>
@@ -37,8 +52,8 @@ export default function MealPlans({ mealPlans, eatingTime }: MealPlanProps) {
         }
     };
     const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-    const todaysDay = new Date().getDay();
-    // TODO: Get meal plans from database
+
+
 
     return (
         <>
@@ -49,28 +64,29 @@ export default function MealPlans({ mealPlans, eatingTime }: MealPlanProps) {
                 onMouseUp={handleMouseUp}
                 ref={ref}
                 onMouseMove={onMouseMove}>
-                {/* {mealPlans.map((mealPlan, index) => (
-                    <Meal meal={mealPlan} key={mealPlan.id} day={days[(todaysDay + index) % 7]} />
-                ))} */}
 
-                {days.map((day, index) => (
-                    <li
-                        key={days[(todaysDay + index) % 7]}
-                        className="mx-10 my-10 carousel-item">
-                        <div className="shadow card w-96 bg-base-200">
-                            <div className="card-body">
-                                <div className="card-title">{day}</div>
-                                <div className="card-action">
-                                    <Link href={`/add-new-meals?type=${eatingTime}&day=${days[(todaysDay + index) % 7]}`}>
-                                        <button className="btn-secondary btn ">
-                                            Add New
-                                        </button>
-                                    </Link>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                ))}
+                {days.map((day, index) => {
+                    const mealForDayTime = mealPlan.data?.find(
+                        (meal) =>
+                            meal.servedAtTime === eatingTime &&
+                            dayjs(meal.servedAtDay).format("YYYY-MM-DD") ===
+                                dayjs().add(index, "day").format("YYYY-MM-DD")
+                    );
+                    return (
+                        <li key={index} className="mx-10 my-10 carousel-item">
+                            {mealForDayTime ? (
+                                <MealCard meal={mealForDayTime} buttonText="View"/>
+                            ) : (
+                                <MealCard
+                                    link={`/add-new-meals?type=${eatingTime}&day=${dayjs()
+                                        .add(index, "day")
+                                        .format("YYYY-MM-DD")}`}
+                                    buttonText="Add New"
+                                />
+                            )}
+                        </li>
+                    );
+                })}
             </ul>
         </>
     );

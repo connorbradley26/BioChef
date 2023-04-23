@@ -7,7 +7,12 @@ const MealCardDetails = () => {
     return (
         <>
             {meal ? (
-                <p>{meal.createdAt.toDateString()}</p>
+                <>
+                    <p>{Math.round(meal.mealNutritionalInformation?.calories || 0)} kcal</p>
+                    <p>{Math.round(meal.mealNutritionalInformation?.protein || 0)}g protein</p>
+                    <p>{Math.round(meal.mealNutritionalInformation?.fat || 0)}g fat</p>
+                    <p>{Math.round(meal.mealNutritionalInformation?.carbs || 0)}g carbs</p>
+                </>
             ) : (
                 <p>Meal not found</p>
             )}

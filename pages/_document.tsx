@@ -2,7 +2,7 @@ import { Head, Html, Main, NextScript } from 'next/document'
 
 export default function Document() {
   return (
-    <Html className=" antialiased" lang="en" data-theme="lofi">
+    <Html className="antialiased " lang="en" data-theme="lofi">
       <Head>
         <link
           rel="preconnect"

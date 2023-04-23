@@ -25,8 +25,8 @@ export interface GetRecipeByID {
     sourceName?:               string;
     pricePerServing?:          number;
     extendedIngredients:      ExtendedIngredient[];
-    id?:                       number;
-    title?:                    string;
+    id:                       number;
+    title:                    string;
     readyInMinutes?:           number;
     servings?:                 number;
     sourceUrl?:                string;
@@ -46,8 +46,8 @@ export interface GetRecipeByID {
 }
 
 export interface AnalyzedInstruction {
-    name?:  string;
-    steps?: Step[];
+    name:  string;
+    steps: Step[];
 }
 
 export interface Step {

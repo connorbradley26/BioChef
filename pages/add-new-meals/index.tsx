@@ -11,11 +11,11 @@ type FormValues = RouterInputs["meals"]["getMealsByComplexQuery"];
 const IndividualMeal: NextPageWithLayout = () => {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const router = useRouter();
-    const { type, day } = router.query as { type: "Breakfast" | "Lunch" | "Dinner"; day: "Sun" | "Mon" | "Tue" | "Wed" | "Thu" | "Fri" | "Sat" };
+    const { type, day } = router.query as { type: "Breakfast" | "Lunch" | "Dinner"; day: string };
 
     // TODO - Sort this out
     const [values, setValues] = useState<FormValues>({
-        query: "",
+        query: undefined,
         cuisine: undefined,
         maxCalories: undefined,
         maxCarbs: undefined,

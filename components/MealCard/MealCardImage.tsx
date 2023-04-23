@@ -7,7 +7,7 @@ const MealCardImage = () => {
 
     return (
         <figure>
-            {meal && <Image src={meal.image} alt={meal.name} />}              
+            {meal && <Image src={meal.image} alt={meal.title} width={500} height={500} />}              
         </figure>
     )
 };
