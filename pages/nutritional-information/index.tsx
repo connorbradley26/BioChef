@@ -1,5 +1,5 @@
-import NutritionalBox from "@/components/nutritional-box";
-import YourNeedsBox from "@/components/your-needs-box";
+import NutritionalBox from "@/components/NutritionChart";
+import YourNeedsBox from "@/components/YourNeedsBox";
 import { NextPageWithLayout } from "../_app";
 import RootLayout from "../layout";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";

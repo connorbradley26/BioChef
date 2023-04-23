@@ -1,6 +1,6 @@
 "use client";
 
-import NutritionInfoUpdate from "@/components/nutrition-info-update";
+import NutritionInfoUpdateForm from "@/components/UpdateNutritionInfo/NutritionalInfoUpdateForm";
 import { NextPageWithLayout } from "@/pages/_app";
 import RootLayout from "@/pages/layout";
 
@@ -8,7 +8,7 @@ const NutritionInfoUpdatePage: NextPageWithLayout = () => {
 
     return (
         <main className="md:m-10 ">
-            <NutritionInfoUpdate />
+            <NutritionInfoUpdateForm />
         </main>
     );
 }
