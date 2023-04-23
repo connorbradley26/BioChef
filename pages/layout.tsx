@@ -11,10 +11,10 @@ export default function RootLayout({children }: {children : ReactElement}): Reac
 
 
   return (
-    <>
+    <div className='flex flex-col min-h-screen'>
         <NavBar />
         {children}
         <Analytics />
-      </>
+      </div>
   )
 }

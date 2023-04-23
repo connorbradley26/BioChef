@@ -163,8 +163,6 @@ const IndividualMeal: NextPageWithLayout = () => {
                 <button type="submit" className="col-span-2 btn btn-primary">Submit</button>
             </Form>
         </Formik>
-        <pre className="">{JSON.stringify(values, null, 2)}</pre>
-        <pre className="">{JSON.stringify(meals, null, 2)}</pre>
         </div>
     );
 };

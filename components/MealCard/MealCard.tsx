@@ -20,7 +20,7 @@ interface MealCardProps {
 const MealCard = ({ getMeal, createMeal, link, buttonText, createAction, getAction }: MealCardProps) => {
     return (
         <MealCardContext.Provider value={{ getMeal, createMeal, link, buttonText, createAction, getAction}}>
-            <div className="shadow-xl card w-96 bg-base-100">
+            <div className="shadow-xl card w-96 bg-base-100 h-[40rem]">
                 <MealCardImage />
                 <div className="card-body">
                     <MealCardTitle />

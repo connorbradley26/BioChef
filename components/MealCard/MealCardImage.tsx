@@ -6,9 +6,9 @@ const MealCardImage = () => {
     const { createMeal, getMeal } = useMealCardContext();
 
     return (
-        <figure>
-            {createMeal ? <Image src={createMeal.image} alt={createMeal.title} width={500} height={500} />
-                : getMeal ? <Image src={getMeal.image} alt={getMeal.name} width={500} height={500} />
+        <figure className="pointer-events-none">
+            {createMeal ? <Image src={createMeal.image} alt={createMeal.title} width={384} height={284} />
+                : getMeal ? <Image src={getMeal.image} alt={getMeal.name} width={384} height={284} />
                     : null}              
         </figure>
     )

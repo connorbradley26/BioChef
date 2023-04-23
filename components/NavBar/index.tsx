@@ -36,7 +36,7 @@ export default function NavBar() {
     }
 
     return (
-        <div className="navbar ">
+        <div className="sticky top-0 z-50 navbar glass ">
             {/* Mobile */}
             <div className="navbar-start">
                 <div className="dropdown">
