@@ -79,6 +79,7 @@ model Meal {
   Users                        User[]
   userId                       String?
   mealNutritionalInformationId String?
+  image                        String
 
   @@map(name: "meals")
 }

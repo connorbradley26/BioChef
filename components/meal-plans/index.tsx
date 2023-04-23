@@ -1,6 +1,4 @@
-
 import Image from "next/image";
-import MealCard from "./meal-card";
 import type { mealPlans as MealPlanType } from "@/types";
 import { useRef, useState } from "react";
 import Link from "next/link";
@@ -38,7 +36,7 @@ export default function MealPlans({ mealPlans, eatingTime }: MealPlanProps) {
             ref.current.scrollLeft = scrollX - e.clientX + clientX;
         }
     };
-    const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+    const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
     const todaysDay = new Date().getDay();
     // TODO: Get meal plans from database
 
@@ -46,7 +44,7 @@ export default function MealPlans({ mealPlans, eatingTime }: MealPlanProps) {
         <>
             <h1 className="mx-10 mt-20 mb-10 text-xl ">{eatingTime}</h1>
             <ul
-                className="flex overflow-x-scroll select-none scroll-smooth scrollbar-hide carousel"
+                className="flex overflow-x-scroll select-none carousel scroll-smooth scrollbar-hide"
                 onMouseDown={handleMouseDown}
                 onMouseUp={handleMouseUp}
                 ref={ref}
@@ -54,13 +52,25 @@ export default function MealPlans({ mealPlans, eatingTime }: MealPlanProps) {
                 {/* {mealPlans.map((mealPlan, index) => (
                     <Meal meal={mealPlan} key={mealPlan.id} day={days[(todaysDay + index) % 7]} />
                 ))} */}
-                 <li className="mx-10 my-10 carousel-item">
-                    <div className="shadow card w-96 bg-base-200">
-                        <Link href="/add-new-meals">
-                            <button className="btn btn-secondary card-body">Add New </button>
-                        </Link>
-                    </div>
-                </li>
+
+                {days.map((day, index) => (
+                    <li
+                        key={days[(todaysDay + index) % 7]}
+                        className="mx-10 my-10 carousel-item">
+                        <div className="shadow card w-96 bg-base-200">
+                            <div className="card-body">
+                                <div className="card-title">{day}</div>
+                                <div className="card-action">
+                                    <Link href={`/add-new-meals?type=${eatingTime}&day=${days[(todaysDay + index) % 7]}`}>
+                                        <button className="btn-secondary btn ">
+                                            Add New
+                                        </button>
+                                    </Link>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                ))}
             </ul>
         </>
     );

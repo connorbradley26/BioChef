@@ -1,7 +1,6 @@
 import { RouterInputs, api } from "@/lib/api";
 import { NextPageWithLayout } from "@/pages/_app";
 import RootLayout from "@/pages/layout";
-import { GetRecipeByID } from "@/types/Spoonacular/GetRecipeByID";
 import { Field, Form, Formik } from "formik";
 import { useRouter } from "next/router";
 import { useState } from "react";
@@ -12,6 +11,7 @@ type FormValues = RouterInputs["meals"]["getMealsByComplexQuery"];
 const IndividualMeal: NextPageWithLayout = () => {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const router = useRouter();
+    const { type, day } = router.query as { type: "Breakfast" | "Lunch" | "Dinner"; day: "Sun" | "Mon" | "Tue" | "Wed" | "Thu" | "Fri" | "Sat" };
 
     // TODO - Sort this out
     const [values, setValues] = useState<FormValues>({
@@ -32,7 +32,7 @@ const IndividualMeal: NextPageWithLayout = () => {
         setIsSubmitting(false);
         console.log("complex meals fetched", data);
         localStorage.setItem("MealSuggestions", JSON.stringify(data));
-        router.push("/add-new-meals/results");        
+        router.push("/add-new-meals/results?day=" + day + "&type=" + type);        
      },
      onError: (error) => {
             setIsSubmitting(false);
