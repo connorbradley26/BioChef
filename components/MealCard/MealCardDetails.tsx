@@ -2,16 +2,16 @@ import { useMealCardContext } from "./MealCardContext";
 
 // TODO - update this to have actual details
 const MealCardDetails = () => {
-    const { meal } = useMealCardContext();
+    const { getMeal } = useMealCardContext();
 
     return (
         <>
-            {meal ? (
+            {getMeal ? (
                 <>
-                    <p>{Math.round(meal.mealNutritionalInformation?.calories || 0)} kcal</p>
-                    <p>{Math.round(meal.mealNutritionalInformation?.protein || 0)}g protein</p>
-                    <p>{Math.round(meal.mealNutritionalInformation?.fat || 0)}g fat</p>
-                    <p>{Math.round(meal.mealNutritionalInformation?.carbs || 0)}g carbs</p>
+                    <p>{Math.round(getMeal.mealNutritionalInformation?.calories || 0)} kcal</p>
+                    <p>{Math.round(getMeal.mealNutritionalInformation?.protein || 0)}g protein</p>
+                    <p>{Math.round(getMeal.mealNutritionalInformation?.fat || 0)}g fat</p>
+                    <p>{Math.round(getMeal.mealNutritionalInformation?.carbs || 0)}g carbs</p>
                 </>
             ) : (
                 <p>Meal not found</p>

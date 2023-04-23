@@ -1,14 +1,15 @@
 import MealCard from "@/components/MealCard/MealCard";
 import { GetRecipeByID } from "@/types/Spoonacular/GetRecipeByID";
-import { Ingredients, Meal } from "@prisma/client";
 import { useRouter } from "next/router";
 import { RouterInputs, api } from "@/lib/api";
 import { useSession } from "next-auth/react";
 import dayjs from "dayjs";
+import { NextPageWithLayout } from "@/pages/_app";
+import RootLayout from "@/pages/layout";
 type CreateMeal = RouterInputs["meals"]["createMeal"];
 
 
-const Results = () => {
+const Results: NextPageWithLayout = () => {
     const router = useRouter();
     const { type, day } = router.query as { type: "Breakfast" | "Lunch" | "Dinner"; day: string };
     const session = useSession();
@@ -69,7 +70,7 @@ const Results = () => {
         return nutrition;
     }
 
-    const addMeal = (meal: CreateMeal) => {
+    const createNewMeal = (meal: CreateMeal) => {
         createMealMutation.mutate(meal);
         console.log("mealResponse", );
     }
@@ -94,7 +95,7 @@ const Results = () => {
 
                     return (
                         <div key={meal.id}>
-                            <MealCard meal={formattedMeal} buttonText="Add" action={addMeal}/>
+                            <MealCard createMeal={formattedMeal} buttonText="Add" createAction={createNewMeal}/>
 
                         </div>
                     )
@@ -105,6 +106,10 @@ const Results = () => {
             <pre>{JSON.stringify(meals, null, 2)}</pre>
         </div>
     )
+}
+
+Results.getLayout = (page) => {
+    return <RootLayout>{page}</RootLayout>
 }
 
 export default Results;

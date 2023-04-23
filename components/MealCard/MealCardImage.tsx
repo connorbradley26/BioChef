@@ -3,11 +3,13 @@ import Image from "next/image";
 
 
 const MealCardImage = () => {
-    const { meal } = useMealCardContext();
+    const { createMeal, getMeal } = useMealCardContext();
 
     return (
         <figure>
-            {meal && <Image src={meal.image} alt={meal.title} width={500} height={500} />}              
+            {createMeal ? <Image src={createMeal.image} alt={createMeal.title} width={500} height={500} />
+                : getMeal ? <Image src={getMeal.image} alt={getMeal.name} width={500} height={500} />
+                    : null}              
         </figure>
     )
 };

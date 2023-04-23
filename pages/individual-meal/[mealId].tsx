@@ -1,7 +1,6 @@
 import MealDescription from "@/components/meal-description";
 import MealImage from "@/components/meal-image";
 import MealNutritionInfo from "@/components/meal-nutrition-info";
-import { mealPlans } from "@/dummydata/MealPlans"
 import { api } from "@/lib/api";
 import { NextPageWithLayout } from "@/pages/_app";
 import RootLayout from "@/pages/layout";

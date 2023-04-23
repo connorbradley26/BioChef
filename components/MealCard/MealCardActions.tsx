@@ -3,12 +3,14 @@ import { useMealCardContext } from "./MealCardContext";
 
 // TODO - finish this
 const MealCardActions = () => {
-    const { meal, link, buttonText, action } = useMealCardContext();
+    const { getMeal, createMeal, link, buttonText, createAction, getAction } = useMealCardContext();
 
     const handleClick = () => {
-        console.log("Handle click", meal, action)
-        if (action && meal) {
-            action(meal);
+        if (getMeal) {
+            getAction && getAction(getMeal);
+        }
+        else if (createMeal) {
+            createAction && createAction(createMeal);
         }
     }
 

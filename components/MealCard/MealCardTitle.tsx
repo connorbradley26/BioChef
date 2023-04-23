@@ -3,10 +3,10 @@ import { useMealCardContext } from "./MealCardContext";
 
 const MealCardTitle = () => {
 
-    const { meal } = useMealCardContext();
+    const { createMeal, getMeal } = useMealCardContext();
 
     return (
-        <h2 className="card-title"> {meal ? meal.title : "Meal not found"} </h2>
+        <h2 className="card-title"> {createMeal ? createMeal.title : getMeal ? getMeal.name : "Meal Not Found"} </h2>
     )
 };
 

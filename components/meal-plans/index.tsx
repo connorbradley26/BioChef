@@ -75,7 +75,7 @@ export default function MealPlans({ eatingTime }: MealPlanProps) {
                     return (
                         <li key={index} className="mx-10 my-10 carousel-item">
                             {mealForDayTime ? (
-                                <MealCard meal={mealForDayTime} buttonText="View"/>
+                                <MealCard getMeal={mealForDayTime} link={`/individual-meal/${mealForDayTime.spoonacularId}`}  buttonText="View"/>
                             ) : (
                                 <MealCard
                                     link={`/add-new-meals?type=${eatingTime}&day=${dayjs()
