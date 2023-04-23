@@ -1,4 +1,5 @@
-import Hero from '@/components/Hero'
+
+import Hero from '@/components/hero';
 import { NextPageWithLayout } from './_app';
 import RootLayout from './layout';
 

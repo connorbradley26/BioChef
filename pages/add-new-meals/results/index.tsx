@@ -95,7 +95,7 @@ const Results: NextPageWithLayout = () => {
 
                     return (
                         <div key={meal.id}>
-                            <MealCard createMeal={formattedMeal} buttonText="Add" createAction={createNewMeal}/>
+                            <MealCard createMeal={formattedMeal} buttonText="Add" createAction={createNewMeal} link="/meal-plans" />
 
                         </div>
                     )

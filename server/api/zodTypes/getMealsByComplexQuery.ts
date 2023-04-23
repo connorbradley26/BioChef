@@ -3,7 +3,7 @@ import { z } from "zod";
 
 export const getMealsByComplexQueryInput = 
     z.object({
-        query: z.string().min(1).optional(),
+        query: z.string().optional(),
         maxCalories: z.number().min(0).max(2000).optional(),
         minCalories: z.number().min(0).max(2000).optional(),
         maxCarbs: z.number().min(0).max(2000).optional(),
@@ -19,7 +19,8 @@ export const getMealsByComplexQueryInput =
 export type GetMealsByComplexQueryInput = z.infer<typeof getMealsByComplexQueryInput>;
 
 export const getMealsByComplexQueryOutput =
-    z.array(
+    z.object({ 
+        results: z.array(
         z.object({
             id: z.number(),
             title: z.string(),
@@ -45,6 +46,6 @@ export const getMealsByComplexQueryOutput =
                 }),
             ),
         })
-    );
+    )});
 
 export type GetMealsByComplexQueryOutput = z.infer<typeof getMealsByComplexQueryOutput>;

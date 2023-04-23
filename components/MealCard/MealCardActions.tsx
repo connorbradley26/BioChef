@@ -15,13 +15,13 @@ const MealCardActions = () => {
     }
 
     return (
-        <div className="justify-end card-actions">
+        <div className="w-full h-full ">
             {link ? (
                 <Link href={link}>
-                    <button className="btn-primary btn" onClick={handleClick}>{buttonText ? buttonText : "View"}</button>
+                    <button className="w-full h-full btn-primary btn" onClick={handleClick}>{buttonText ? buttonText : "View"}</button>
                 </Link>
             ) : (
-                <button className="btn-primary btn" onClick={handleClick}>{buttonText ? buttonText : "View"}</button>
+                <button className="w-full h-full btn-primary btn" onClick={handleClick}>{buttonText ? buttonText : "View"}</button>
             )}
         </div>
     );

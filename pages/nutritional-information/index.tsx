@@ -10,32 +10,14 @@ import { Key, useState } from "react";
 import { api } from "@/lib/api";
 import { useSession } from "next-auth/react";
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
-    const userStats = await prisma.userNutritionalStats.findMany({
-        where: {
-            userId: ctx.req.cookies.userId,
-        },
-    });
-    const chartData = convertToChartJSdata(userStats);
-    console.log(chartData);
-
-    return {
-        props: {
-            chartData: chartData,
-        },
-    };
-};
-
 const NutritionalInformation: NextPageWithLayout = () => {
+    const [activeTab, setActiveTab] = useState<number>(0);
     const session = useSession();
-    const {
-        data: userNutStats,
-        isLoading,
-        isSuccess,
-    } = api.userNutritionalStats.getAllByUserId.useQuery({
+
+    const { data: userNutStats, isLoading, isSuccess, isError } = api.userNutritionalStats.getAllByUserId.useQuery({
         userId: session.data?.user.id || "",
     });
-    const [activeTab, setActiveTab] = useState<number>(0);
+
 
     if (isSuccess) {
         const chartData = convertToChartJSdata(userNutStats);
@@ -51,22 +33,14 @@ const NutritionalInformation: NextPageWithLayout = () => {
                                 chartData.datasets.map((data, index) => {
                                     return (
                                         <>
-                                            <a
-                                                key={data.type}
-                                                className={`${activeTab == index ? "tab-active " : ""}  tab`}
-                                                onClick={() =>
-                                                    setActiveTab(index)
-                                                }>
+                                            <a key={index} className={`${activeTab == index ? "tab-active " : ""}  tab`} onClick={() => setActiveTab(index)}>
                                                 {data.type}
                                             </a>
                                         </>
                                     );
                                 })}
                         </div>
-                        <NutritionalBox
-                            labels={chartData.labels}
-                            data={chartData.datasets[activeTab]}
-                        />
+                        <NutritionalBox labels={chartData.labels} data={chartData.datasets[activeTab]} />
                     </div>
                 </div>
                 <div className=" rounded-box">
@@ -77,7 +51,15 @@ const NutritionalInformation: NextPageWithLayout = () => {
             </main>
         );
     }
-    return <div> Loading... </div>;
+    if (isLoading) {
+        // TODO - add loading spinner
+        return <div> Loading... </div>;
+    }
+    if (isError) {
+        // TODO - add error message
+        return <div> Error </div>;
+    }
+    return <div> Error </div>;
 };
 
 NutritionalInformation.getLayout = (page) => {

@@ -84,6 +84,7 @@ export const mealRouter = createTRPCRouter({
             const meals = await fetch(url)
                 .then((response) => response.json())
                 .then((data) => {
+                    // console.log(data)
                     const parsedData = getMealsByComplexQueryOutput.parse(data);
                     return parsedData;
                 });
