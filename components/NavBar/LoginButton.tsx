@@ -8,7 +8,7 @@ export default function LoginButton() {
     // If user is signed in, show their avatar and a logout button
     if (session) {
         return (
-            <div className="relative mr-2 dropdown ">
+            <div className="relative mr-2 dropdown " data-test="loggedin">
                 <label className="avatar">
                     <div
                         tabIndex={0}
@@ -42,7 +42,7 @@ export default function LoginButton() {
     }
 
     return (
-        <button className="btn btn-primary" onClick={() => signIn()}>
+        <button className="btn btn-primary" data-test="login" onClick={() => signIn()}>
             Login
         </button>
     );
