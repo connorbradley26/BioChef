@@ -8,8 +8,9 @@ import RootLayout from "@/pages/layout";
 import { useUser } from "@clerk/nextjs";
 type CreateMeal = RouterInputs["meals"]["createMeal"];
 
+interface Props {}
 
-const Results: NextPageWithLayout = () => {
+const Results: NextPageWithLayout<Props> = () => {
     const router = useRouter();
     const { type, day } = router.query as { type: "Breakfast" | "Lunch" | "Dinner"; day: string };
     const { user, isSignedIn } = useUser();

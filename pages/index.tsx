@@ -3,9 +3,9 @@ import Hero from '@/components/Hero';
 import { NextPageWithLayout } from './_app';
 import RootLayout from './layout';
 
+interface Props {}
 
-
-const Home: NextPageWithLayout = () => {
+const Home: NextPageWithLayout<Props> = () => {
 
   return (
     <main className="">      

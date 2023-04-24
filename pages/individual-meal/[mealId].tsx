@@ -6,8 +6,9 @@ import { NextPageWithLayout } from "@/pages/_app";
 import RootLayout from "@/pages/layout";
 import { useRouter } from "next/router";
 
+interface Props {}
 
-const IndividualMeal: NextPageWithLayout = () => {
+const IndividualMeal: NextPageWithLayout<Props> = () => {
     const mealId = useRouter().query.mealId as string;
     const {data: meal } = api.meals.getMealById.useQuery({mealId: mealId}, { refetchOnWindowFocus: false })
     if (!meal) {

@@ -7,8 +7,10 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 type FormValues = RouterInputs["meals"]["getMealsByComplexQuery"];
 
+interface Props {}
+
 // TODO - refactor to remove duplicate code, moving input fields to component
-const IndividualMeal: NextPageWithLayout = () => {
+const IndividualMeal: NextPageWithLayout<Props> = () => {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const router = useRouter();
     

@@ -11,7 +11,10 @@ import { api } from "@/lib/api";
 import { useUser } from "@clerk/nextjs";
 import LoadingSpinner from "@/components/LoadingSpinner";
 
-const NutritionalInformation: NextPageWithLayout = () => {
+interface Props {}
+
+//TODO - getServersideProps 
+const NutritionalInformation: NextPageWithLayout<Props> = () => {
     const [activeTab, setActiveTab] = useState<number>(0);
     const { user, isSignedIn} = useUser();
 

@@ -1,10 +1,10 @@
-"use client";
-
 import NutritionInfoUpdateForm from "@/components/UpdateNutritionInfo/NutritionalInfoUpdateForm";
 import { NextPageWithLayout } from "@/pages/_app";
 import RootLayout from "@/pages/layout";
 
-const NutritionInfoUpdatePage: NextPageWithLayout = () => {
+interface Props {}
+
+const NutritionInfoUpdatePage: NextPageWithLayout<Props> = () => {
 
     return (
         <main className="md:m-10 ">
