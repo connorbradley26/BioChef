@@ -6,23 +6,6 @@ import { GetRecipeByID } from "@/types/Spoonacular/GetRecipeByID";
 import { getMealsByComplexQueryInput, getMealsByComplexQueryOutput } from "../zodTypes/getMealsByComplexQuery";
 
 export const mealRouter = createTRPCRouter({
-    getAllByUserId: protectedProcedure
-        .input(z.object({ userId: z.string() }))
-        .query(async ({ input, ctx }) => {
-            const meals = await ctx.prisma.meal.findMany({
-                where: {
-                    userId: input.userId,
-                },
-            });
-            if (!meals) {
-                throw new TRPCError({
-                    code: "NOT_FOUND",
-                    message: "No meals found",
-                });
-            }
-            return meals;
-        }),
-
     getMealSuggestionsByNutrition: protectedProcedure
         .input(
             z.object({
@@ -158,7 +141,7 @@ export const mealRouter = createTRPCRouter({
                 where: {
                     Users: {
                         some: {
-                            id: ctx.auth.user.id
+                            id: ctx.auth.user?.id
                         },
                     },
                     servedAtDay: {

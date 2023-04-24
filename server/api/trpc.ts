@@ -29,7 +29,7 @@ interface AuthContext {
 const createInnerTRPCContext = ({auth}: AuthContext) => {
   return {
     auth,
-    prisma,
+    prisma
   };
 };
 
@@ -96,13 +96,13 @@ export const publicProcedure = t.procedure;
 
 /** Reusable middleware that enforces users are logged in before running the procedure. */
 const enforceUserIsAuthed = t.middleware(({ ctx, next }) => {
-  if (!ctx.auth || !ctx.auth.user) {
+  if (!ctx.auth) {
     throw new TRPCError({ code: "UNAUTHORIZED" });
   }
   return next({
     ctx: {
       // infers the `session` as non-nullable
-      auth: { ...ctx.auth, user: ctx.auth.user },
+      auth: ctx.auth
     },
   });
 });
