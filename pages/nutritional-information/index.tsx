@@ -9,6 +9,7 @@ import convertToChartJSdata from "@/lib/convertToChartJSData";
 import { Key, useState } from "react";
 import { api } from "@/lib/api";
 import { useUser } from "@clerk/nextjs";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 const NutritionalInformation: NextPageWithLayout = () => {
     const [activeTab, setActiveTab] = useState<number>(0);
@@ -18,7 +19,7 @@ const NutritionalInformation: NextPageWithLayout = () => {
         userId: user?.id || "",
     });
 
-
+    
     if (isSuccess) {
         const chartData = convertToChartJSdata(userNutStats);
         console.log(chartData);
@@ -52,8 +53,7 @@ const NutritionalInformation: NextPageWithLayout = () => {
         );
     }
     if (isLoading) {
-        // TODO - add loading spinner
-        return <div> Loading... </div>;
+        return <LoadingSpinner />
     }
     if (isError) {
         // TODO - add error message

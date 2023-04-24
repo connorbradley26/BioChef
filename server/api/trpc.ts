@@ -15,7 +15,11 @@ interface AuthContext {
   auth: SignedInAuthObject | SignedOutAuthObject;
 }
 
-
+export const createContextInner = async ({ auth }: AuthContext  ) => {
+  return {
+    auth,
+  }
+}
 
 /**
  * This is the actual context you will use in your router. It will be used to process every request
@@ -28,7 +32,10 @@ export const createTRPCContext = async (opts: CreateNextContextOptions) => {
   const session = getAuth(req);
   const userId = session.userId;
 
+  const inner = await createContextInner({ auth: getAuth(req) });
+
   return {
+    ...inner,
     prisma,
     userId,
   };
@@ -85,12 +92,12 @@ export const publicProcedure = t.procedure;
 
 /** Reusable middleware that enforces users are logged in before running the procedure. */
 const enforceUserIsAuthed = t.middleware(({ ctx, next }) => {
-  if (!ctx.userId) {
+  if (!ctx.auth.userId) {
     throw new TRPCError({ code: "UNAUTHORIZED" });
   }
   return next({
     ctx: {
-      userId: ctx.userId,
+      userId: ctx.auth.userId,
     },
   });
 });

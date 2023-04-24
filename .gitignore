@@ -37,3 +37,5 @@ next-env.d.ts
 
 /prisma/experimentalschema.prisma
 cypress.env.json
+cypress/screenshots
+cypress/videos

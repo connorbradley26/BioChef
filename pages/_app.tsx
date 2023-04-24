@@ -14,12 +14,12 @@ const fontSans = FontSans({
 })
 
 
-export type NextPageWithLayout = NextPage & {
+export type NextPageWithLayout<Props> = NextPage<Props> & {
     getLayout?: (page: ReactElement) => ReactNode;
 };
 
-type AppPropsWithLayout = AppProps & {
-    Component: NextPageWithLayout;
+type AppPropsWithLayout= AppProps & {
+    Component: NextPageWithLayout<AppProps>;
 } 
 
 function MyApp({ Component, pageProps: {  ...pageProps } }: AppPropsWithLayout) {
