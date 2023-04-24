@@ -76,7 +76,6 @@ export const mealRouter = createTRPCRouter({
     createMeal: protectedProcedure
         .input(
             z.object({
-                userId: z.string(),
                 spoonacularId: z.number(),
                 title: z.string(),
                 servedAtDay: z.date(),
@@ -124,11 +123,7 @@ export const mealRouter = createTRPCRouter({
                         },
                     },
                     image: input.image,
-                    Users: {
-                        connect: {
-                            id: input.userId,
-                        },
-                    },
+                    userId: ctx.userId,
                 },
             });
             return meal;
@@ -139,11 +134,7 @@ export const mealRouter = createTRPCRouter({
         .query(async ({ ctx, input }) => {
             const meals = await ctx.prisma.meal.findMany({
                 where: {
-                    Users: {
-                        some: {
-                            id: ctx.auth.user?.id
-                        },
-                    },
+                    userId: ctx.userId,
                     servedAtDay: {
                         gte: input.dateFrom,
                         lte: input.dateTo,

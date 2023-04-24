@@ -2,20 +2,20 @@ import MealCard from "@/components/MealCard/MealCard";
 import { GetRecipeByID } from "@/types/Spoonacular/GetRecipeByID";
 import { useRouter } from "next/router";
 import { RouterInputs, api } from "@/lib/api";
-import { useSession } from "next-auth/react";
 import dayjs from "dayjs";
 import { NextPageWithLayout } from "@/pages/_app";
 import RootLayout from "@/pages/layout";
+import { useUser } from "@clerk/nextjs";
 type CreateMeal = RouterInputs["meals"]["createMeal"];
 
 
 const Results: NextPageWithLayout = () => {
     const router = useRouter();
     const { type, day } = router.query as { type: "Breakfast" | "Lunch" | "Dinner"; day: string };
-    const session = useSession();
+    const { user, isSignedIn } = useUser();
     const createMealMutation = api.meals.createMeal.useMutation();
 
-    if (!session?.data?.user?.id) {
+    if (!isSignedIn) {
         return (
             <div>
                 <h1>Not logged in</h1>
@@ -87,7 +87,7 @@ const Results: NextPageWithLayout = () => {
                         steps: steps,
                         ingredients: convertIngredients(meal),
                         nutrition: convertNutrition(meal),
-                        userId: session.data.user.id,
+                        userId: user.id,
                         image: meal.image || "https://via.placeholder.com/300",
                         servedAtDay: dayjs(day).toDate(),
                         servedAtTime: type

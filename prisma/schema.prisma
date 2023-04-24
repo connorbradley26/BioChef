@@ -50,7 +50,6 @@ model User {
   image                String?
   createdAt            DateTime               @default(now()) @map(name: "created_at")
   updatedAt            DateTime               @default(now()) @map(name: "updated_at")
-  meals                Meal[]
   accounts             Account[]
   sessions             Session[]
   UserNutritionalStats UserNutritionalStats[]
@@ -77,10 +76,9 @@ model Meal {
   steps         String[]
   ingredients   Ingredients[]
   nutrition     MealNutritionalInformation?
-  Users         User[]
-  userId        String?
   image         String
   spoonacularId Int
+  userId        String
 
   @@map(name: "meals")
 }
