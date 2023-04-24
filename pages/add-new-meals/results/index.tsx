@@ -87,7 +87,6 @@ const Results: NextPageWithLayout = () => {
                         steps: steps,
                         ingredients: convertIngredients(meal),
                         nutrition: convertNutrition(meal),
-                        userId: user.id,
                         image: meal.image || "https://via.placeholder.com/300",
                         servedAtDay: dayjs(day).toDate(),
                         servedAtTime: type
