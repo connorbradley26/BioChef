@@ -16,8 +16,9 @@ describe('Google', function () {
     beforeEach(function () {
       cy.loginByGoogleApi()
     })
-  
+    
     it('shows onboarding', function () {
-      cy.contains('Get Started').should('be.visible')
+      cy.getCookies()
+      cy.contains('Meal Plans')
     })
   })

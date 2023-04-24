@@ -8,14 +8,14 @@ import { UserNutritionalStats } from "@prisma/client";
 import convertToChartJSdata from "@/lib/convertToChartJSData";
 import { Key, useState } from "react";
 import { api } from "@/lib/api";
-import { useSession } from "next-auth/react";
+import { useUser } from "@clerk/nextjs";
 
 const NutritionalInformation: NextPageWithLayout = () => {
     const [activeTab, setActiveTab] = useState<number>(0);
-    const session = useSession();
+    const { user, isSignedIn} = useUser();
 
     const { data: userNutStats, isLoading, isSuccess, isError } = api.userNutritionalStats.getAllByUserId.useQuery({
-        userId: session.data?.user.id || "",
+        userId: user?.id || "",
     });
 
 
