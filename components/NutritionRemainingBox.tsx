@@ -46,7 +46,7 @@ const NutritionRemainingBox = () => {
     return (
         <div className="shadow card bg-base-100">
             <div className="card-body">
-                <div className="flex items-center gap-4 card-title">Nutition remaining for {dayjs(day).format("dddd")}</div>
+                <div className="flex items-center gap-4 card-title">Nutrition remaining for {dayjs(day).format("dddd")}</div>
             </div>
             <div className="shadow stats stats-vertical">
                 <div className="stat">

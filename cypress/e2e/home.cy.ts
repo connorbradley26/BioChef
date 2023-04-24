@@ -1,24 +1,19 @@
+import { login } from "../support/commands"
 
 describe('Navigation', () => {
-    it('should navigate to the home page', () => {
-        cy.visit('/')
+    beforeEach(() => {
+        cy.visit('/');
     })
+
     it('should not be logged in', () => {
-        cy.visit('/')
         cy.contains("Get Started")
     })
 
-    //TODO set up logged in user
+    it('should be logged in', () => {
+        login();
+        cy.visit('/');
+        cy.contains("Meal Plans")
+    })
 })
 
 
-describe('Google', function () {
-    beforeEach(function () {
-      cy.loginByGoogleApi()
-    })
-    
-    it('shows onboarding', function () {
-      cy.getCookies()
-      cy.contains('Meal Plans')
-    })
-  })
