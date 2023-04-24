@@ -1,14 +1,12 @@
 import { defineConfig } from "cypress";
-const {GoogleSocialLogin} = require('cypress-social-logins').plugins
+const eyesPlugin = require('@applitools/eyes-cypress')
 
-export default defineConfig({
+export default eyesPlugin(defineConfig({
   e2e: {
     setupNodeEvents(on, config) {
-      on("task", {
-        GoogleSocialLogin: GoogleSocialLogin
-      })
+
     },
-    baseUrl: 'http://localhost:3000',
+    baseUrl: "http://localhost:3000",
   },
   
-});
+}));

@@ -3,6 +3,7 @@ import { z } from "zod";
 import {
   createTRPCRouter,
   protectedProcedure,
+  publicProcedure,
 } from "@/server/api/trpc";
 
 export const userRouter = createTRPCRouter({
@@ -16,4 +17,8 @@ export const userRouter = createTRPCRouter({
         }
         return user;
     }),
+
+    example: publicProcedure.query(async ({ctx}) => {
+        return "Hello!"
+    })
 });
