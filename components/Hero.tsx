@@ -1,10 +1,11 @@
-import { useSession } from "next-auth/react";
+
 import Image from "next/image";
 import Link from "next/link";
+import {useUser} from "@clerk/nextjs"
 
 const Hero = () => {
 
-    const user = useSession();
+    const {user, isSignedIn} = useUser();
 
     return (
         <div className="min-h-[calc(100vh_-_4rem)] hero ">
@@ -24,7 +25,7 @@ const Hero = () => {
                     <p className="py-6">
                         Create custom meal plans and track your nutrition
                     </p>
-                    {user.status === "authenticated" ? (
+                    {isSignedIn ? (
                         <div className="flex justify-center gap-4 ">
                         <Link href="/meal-plans">
                             <button className="btn btn-primary">

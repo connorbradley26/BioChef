@@ -3,7 +3,6 @@ import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
 import { spoonacularMeal } from "@/types";
 import { GetRecipeByID } from "@/types/Spoonacular/GetRecipeByID";
-import { Ingredients } from "@prisma/client";
 import { getMealsByComplexQueryInput, getMealsByComplexQueryOutput } from "../zodTypes/getMealsByComplexQuery";
 
 export const mealRouter = createTRPCRouter({
@@ -159,7 +158,7 @@ export const mealRouter = createTRPCRouter({
                 where: {
                     Users: {
                         some: {
-                            id: ctx.session.user.id
+                            id: ctx.auth.user.id
                         },
                     },
                     servedAtDay: {

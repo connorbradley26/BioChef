@@ -1,11 +1,11 @@
 import Link from "next/link";
 import LoginButton from "./LoginButton";
 import Image from "next/image";
-import { useSession } from "next-auth/react";
+import { useUser } from "@clerk/nextjs"
 
 export default function NavBar() {
     let navBarItems = [];
-    const { data: user } = useSession();
+    const { user, isSignedIn } = useUser();
 
     if (!user) {
         navBarItems = [

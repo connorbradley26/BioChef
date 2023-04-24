@@ -1,14 +1,12 @@
 import { defineConfig } from "cypress";
+const {GoogleSocialLogin} = require('cypress-social-logins').plugins
 
 export default defineConfig({
   e2e: {
     setupNodeEvents(on, config) {
       on("task", {
-        'seed:db' () {
-          console.log('sdjdsj'); //just a placeholder
-        }
-      });
-      // implement node event listeners here
+        GoogleSocialLogin: GoogleSocialLogin
+      })
     },
     baseUrl: 'http://localhost:3000',
   },

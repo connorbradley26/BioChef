@@ -50,6 +50,7 @@ Cypress.Commands.add('loginByGoogleApi', () => {
         refresh_token: Cypress.env('GOOGLE_REFRESH_TOKEN'),
       },
     }).then(({ body }) => {
+      cy.log(JSON.stringify(body, null, 2))
       const { access_token, id_token } = body
   
       cy.request({
@@ -68,9 +69,10 @@ Cypress.Commands.add('loginByGoogleApi', () => {
             imageUrl: body.picture,
           },
         }
-  
-        window.localStorage.setItem('googleCypress', JSON.stringify(userItem))
-        cy.visit('/meal-plans')
+        cy.setCookie('next-auth.callback-url', 'http%3A%2F%2Flocalhost%3A3000%2F')
+        cy.setCookie('next-auth.csrf-token', '93f9b7d532f91f892563af292c8245c19ebb8c7147ec141d6d105f79c8a68571%7C0eba9f6ffe2daaa6299a45aa4775ff0d5207f848330b1bcd079cd507cb019938')
+        cy.setCookie(Cypress.env("COOKIE_NAME"), userItem.token);
+        // window.cookies.setItem(Cypress.env("COOKIE_NAME"), userItem.token)
       })
     })
   })

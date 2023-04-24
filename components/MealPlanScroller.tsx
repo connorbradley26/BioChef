@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import MealCard from "./MealCard/MealCard";
 import dayjs from "dayjs";
 import { api } from "@/lib/api";
-import { useSession } from "next-auth/react";
+import { useUser } from "@clerk/nextjs";
 
 interface MealPlanProps {
     eatingTime: string;
@@ -16,7 +16,7 @@ export default function MealPlanScroller({ eatingTime }: MealPlanProps) {
     const ref = useRef<HTMLUListElement>(null);
 
     // Fetch meal plans from API
-    const session = useSession();
+    const  { user, isSignedIn } = useUser();
     const mealPlan = api.meals.getMealsByDateRange.useQuery(
         {
             dateFrom: new Date(dayjs().subtract(1, "day").format("YYYY-MM-DD")),
@@ -26,7 +26,7 @@ export default function MealPlanScroller({ eatingTime }: MealPlanProps) {
     );
 
     // TODO - handle loading and error states
-    if (!session?.data?.user?.id) {
+    if (!isSignedIn) {
         return (
             <div>
                 <h1>Not logged in</h1>
