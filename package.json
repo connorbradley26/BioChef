@@ -40,7 +40,8 @@
     "react-dom": "18.2.0",
     "superjson": "^1.12.3",
     "tailwind-scrollbar-hide": "^1.1.7",
-    "zod": "^3.21.4"
+    "zod": "^3.21.4",
+    "zustand": "^4.3.7"
   },
   "devDependencies": {
     "@applitools/eyes-cypress": "^3.32.1",
