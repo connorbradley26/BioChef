@@ -26,7 +26,6 @@ export const userNutritionalStatsRouter = createTRPCRouter({
 
     saveUserNutritionalStats: protectedProcedure
         .input( z.object({
-            userId: z.string(),
             weight: z.number().optional(),
             height: z.number().optional(),
             age: z.number().optional(),
@@ -57,18 +56,9 @@ export const userNutritionalStatsRouter = createTRPCRouter({
                     testosterone: input.testosterone,
                     hbA1c: input.hbA1c,
                     goal: input.goal,
-                    User: {
-                        connect: {
-                            id: input.userId
-                        }
-                    }
+                    userId: ctx.userId
                 },
             });
             return userNutritionalStats;
         }),
-
-
-        
-            
-
 });

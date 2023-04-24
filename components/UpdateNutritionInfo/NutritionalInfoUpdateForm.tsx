@@ -1,10 +1,10 @@
 import { RouterInputs, api } from "@/lib/api";
 import { faFloppyDisk } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Field, Form, Formik } from "formik";
-import { useSession } from "next-auth/react";
+import { Form, Formik } from "formik";
 import NutritionInputField from "./NutritionInputField";
 import { useRouter } from "next/router";
+import { useUser } from "@clerk/nextjs";
 type FormValues =
     RouterInputs["userNutritionalStats"]["saveUserNutritionalStats"];
 
@@ -12,22 +12,17 @@ type FormValues =
 export default function NutritionInfoUpdateForm() {
     const saveUserMutation =
         api.userNutritionalStats.saveUserNutritionalStats.useMutation();
-    const session = useSession();
+    const { user, isSignedIn } = useUser();
     const router = useRouter();
 
-    if (session.data == null) {
+    if (!isSignedIn) {
         return <div>Not authenticated</div>;
     }
 
-    const initialValues: FormValues = {
-        userId: session.data.user.id,
-    };
+    const initialValues: FormValues = {};
 
     const save = async (values: FormValues) => {
-        await saveUserMutation.mutateAsync({
-            ...values,
-            userId: session.data.user.id,
-        });
+        await saveUserMutation.mutateAsync(values);
     };
 
     return (
