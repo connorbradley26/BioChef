@@ -41,7 +41,6 @@ const ShoppingListPage: NextPageWithLayout<Props> = (props: Props) => {
     const { data: shoppingList } = shoppingListQuery;
 
     if (!shoppingList) return (<div>Loading...</div>);
-    console.log(shoppingList)
     return (
          <div className="flex items-center justify-center mt-20">
             <div className="shadow card">

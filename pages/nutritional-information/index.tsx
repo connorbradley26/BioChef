@@ -25,7 +25,6 @@ const NutritionalInformation: NextPageWithLayout<Props> = () => {
     
     if (isSuccess) {
         const chartData = convertToChartJSdata(userNutStats);
-        console.log(chartData);
 
         return (
             <main className="grid grid-cols-1 gap-6 px-10 mx-auto mt-10 md:grid-cols-3">

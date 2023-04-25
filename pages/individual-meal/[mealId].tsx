@@ -14,30 +14,29 @@ import SuperJSON from "superjson";
 
 
 export async function getStaticProps(ctx: GetStaticPropsContext<{ mealId: string }>) {
-
-    const helpers = createServerSideHelpers({
-        router: appRouter,
-        ctx: {auth: null, prisma: prisma, userId: null},
-        transformer: SuperJSON, 
-      });
-    
+    console.log("Getting Static Props in individual-meal/", ctx.params)
     if (!ctx.params) {
         return {
             notFound: true,
         };
     }
+    const helpers = createServerSideHelpers({
+        router: appRouter,
+        ctx: {auth: null, prisma: prisma, userId: null},
+        transformer: SuperJSON, 
+      });
+
 
     const mealId = parseInt(ctx.params.mealId);
 
-    await helpers.meals.getMealInstructions.prefetch({ mealId });
-    await helpers.meals.getMealById.prefetch({ mealId: mealId.toString() });   // TODO - turn meal id input to string
+    await helpers.meals.getMealInstructions.prefetch({ mealId: mealId });
+    await helpers.meals.getMealById.prefetch({ mealId: mealId.toString()});   // TODO - turn meal id input to string
 
     return {
       props: {
         trpcState: helpers.dehydrate(),
         mealId,
-      },
-      revalidate: 1,
+      }
     };
   }
 
@@ -61,11 +60,16 @@ export async function getStaticProps(ctx: GetStaticPropsContext<{ mealId: string
 
 const IndividualMeal = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
     const { mealId } = props;
+    if (!mealId) {
+        return <div>Meal not found</div>
+    }
     const getMealByIdQuery = api.meals.getMealById;
     const getMealInstructionsQuery = api.meals.getMealInstructions;
     
-    const { data: meal } = getMealByIdQuery.useQuery({ mealId: mealId + "" });
-    const { data: instructions } = getMealInstructionsQuery.useQuery({ mealId: mealId });
+    const { data: meal } = getMealByIdQuery.useQuery({ mealId: mealId + "" || "638604" },
+              { refetchOnMount: false, refetchOnWindowFocus: false, refetchOnReconnect: false});
+    const { data: instructions } = getMealInstructionsQuery.useQuery({ mealId: mealId || 638604 },
+              { refetchOnMount: false, refetchOnWindowFocus: false, refetchOnReconnect: false});
 
     if (!meal) {
         return <div>Meal not found</div>

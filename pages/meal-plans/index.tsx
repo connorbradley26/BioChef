@@ -23,7 +23,7 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext<{ id: st
     await helpers.meals.getMealsByDateRange.prefetch(
         { dateFrom: new Date(dayjs().subtract(1, "day").format("YYYY-MM-DD")), 
           dateTo: new Date(dayjs().add(7, "day").format("YYYY-MM-DD")) });
-
+    
     return {
         props:{
             trpcState: helpers.dehydrate()
@@ -44,9 +44,6 @@ const MealPlansPage: NextPageWithLayout<Props> = (props: Props) => {
     const { data: mealPlan } = mealPlanQuery;
     // TODO: Add error handling 
     if (!mealPlan) return (<LoadingSpinner/>);
-
-    console.log(mealPlan)
-
     return (
         <main className="mx-10 my-20">
             <MealPlanScroller eatingTime="Breakfast" meals={mealPlan.filter((meal) => meal.servedAtTime == "Breakfast")}/>

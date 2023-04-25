@@ -1,36 +1,43 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# BioChef
 
-## Getting Started
+A meal planning app that takes your current bodies nutritional needs and allows you to hit the required daily macros. Provides a shopping list of all of the meals you've planned to help.
 
-First, run the development server:
+## Tech Stack
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+|Type|Version|Description |
+|--|--|--|
+|Framework| NextJs | Full stack framework based on **React**, that allows our front-end and back-end code all in one place.
+|Database| Postgresql |Hosted on Supabase. With a **Prisma** ORM to easily perform CRUD operations.|
+|Styling|DaisyUI|Component library, with **TailwindCSS** to fine tune.|
+|Testing| CypressJS | Feature rich testing library, provides full e2e integration tests|
+|Backend| tRPC | Used to utilise the Remote Procedure Call pattern, providing full type Safety throughout the application.|
+|Auth| Clerk| Simplistic, feature rich auth provider|
+ 
 
-[http://localhost:3000/api/hello](http://localhost:3000/api/hello) is an endpoint that uses [Route Handlers](https://beta.nextjs.org/docs/routing/route-handlers). This endpoint can be edited in `app/api/hello/route.ts`.
+## Setup
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+ 1. Create a `.env` file in the root folder.
+ 2. `DATABASE_URL={Your Database URL }`  - get one from [Supabase](supabase.io)
+ 3. `SPOONACULAR_API_KEY={Your Spoonacular API Key` - get one from [Spoonacular API site](https://spoonacular.com/food-api/)
+ 4. Get your Clerk login details from [Clerk](https://clerk.com/)
+	1. `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY={Your Clerk Publishable Key}`
+	2. `CLERK_SECRET_KEY={Your Clerk Secret Key}`
+5. Get an AppliTools Key from [AppliTools](https://applitools.com/docs/topics/overview/obtain-api-key.html)
+	1. Run this in your terminal `export APPLITOOLS_API_KEY={Your Applitools Key}`
+6. Run `npm install`
+7. Run `npx prisma generate && npx prisma db push` to set up your database.
+8. Finally, run `npm run dev`
 
-## Learn More
+## TODO
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+ - [ ] Fix Middleware issues with images not appearing
+ - [ ] Add loading states
+ - [ ] Move more layout logic to RootLayout
+ - [ ] Add CRUD options to Meal Cards
+ - [ ] Improve Mobile layout throughout
+ - [ ] Improve test coverage
+ - [ ] Make empty MealCards pretty
+ - [ ] Add Subscribe page
+ - [ ] Stub getting new recipes for unit testing purposes.

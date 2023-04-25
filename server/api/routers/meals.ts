@@ -1,8 +1,5 @@
 import { TRPCError } from "@trpc/server";
-import { z } from "zod";
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "@/server/api/trpc";
-import { spoonacularMeal } from "@/types";
-import { GetRecipeByID } from "@/types/Spoonacular/GetRecipeByID";
 import { getMealsByComplexQueryInput, getMealsByComplexQueryOutput } from "../zodTypes/getMealsByComplexQuery";
 import { createMealInput } from "../zodTypes/createMeal";
 import { getMealsByDateRangeInput } from "../zodTypes/getMealsByDateRange";
@@ -25,7 +22,6 @@ export const mealRouter = createTRPCRouter({
                 .then((response) => response.json())
                 .then((data) => {
                     const returnData = getMealByIdOutput.parse(data);
-                    console.log(returnData);
                     return returnData;
                 });
             return mealDetails;
@@ -38,7 +34,6 @@ export const mealRouter = createTRPCRouter({
                 .then((response) => response.json())
                 .then((data) => {
                     const returnData = getMealInstructionsOutput.parse(data);
-                    console.log(returnData);
                     return returnData;
                 });
             return mealInstructions;

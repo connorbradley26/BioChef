@@ -73,7 +73,6 @@ const Results: NextPageWithLayout<Props> = () => {
 
     const createNewMeal = (meal: CreateMeal) => {
         createMealMutation.mutate(meal);
-        console.log("mealResponse", );
     }
 
     return (

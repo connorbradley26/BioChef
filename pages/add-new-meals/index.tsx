@@ -48,7 +48,7 @@ const IndividualMeal: NextPageWithLayout<Props> = () => {
             },
             onError: (error) => {
                 setIsSubmitting(false);
-                console.log("error", error);
+                console.error("error", error);
             },
         }
     );
@@ -59,7 +59,6 @@ const IndividualMeal: NextPageWithLayout<Props> = () => {
             <Formik
                 initialValues={values}
                 onSubmit={(values) => {
-                    console.log(values);
                     setValues(values);
                     setIsSubmitting(true);
                 }}>
