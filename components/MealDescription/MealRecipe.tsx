@@ -1,23 +1,21 @@
-import { mealPlans } from "@/types";
-import { AnalyzedInstruction, Step } from "@/types/Spoonacular/GetRecipeByID";
+import { GetMealInstructionsOutput } from "@/server/api/zodTypes/getMealInstructions";
+import LoadingSpinner from "../LoadingSpinner";
 
 interface MealRecipeProps {
-    steps: Step[];
+    instructions: GetMealInstructionsOutput;
 }
 
-export default function MealRecipe({ steps }: MealRecipeProps) {
+const MealRecipe = ({instructions}: MealRecipeProps)  => {
+    if (!instructions) return (<LoadingSpinner />);
 
     return (
-        <div className="mt-4">
+        <div className="flex-grow mt-4">
             <h3 className="text-xl font-bold">Recipe</h3>
             <ul className="steps steps-vertical">
-                {steps.map((step) => (
-                    <li key={step.number} className="step">
-                        {step.step}
-                    </li>
-                ))}
+                {instructions[0]?.steps.map((step) => <li key={step.number}>{step.step}</li>)}
             </ul>
         </div>
     );
-
 }
+
+export default MealRecipe;

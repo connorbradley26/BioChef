@@ -34,20 +34,8 @@ const IndividualMeal: NextPageWithLayout<Props> = () => {
         type: undefined,
     });
 
-    const typeToSpoonacularType = (type: string) => {
-        switch (type) {
-            case "Breakfast":
-                return "breakfast";
-            case "Lunch":
-            case "Dinner":
-                return "main course";
-            default:
-                return "main course";
-        }
-    };
-
     const { data: meals } = api.meals.getMealsByComplexQuery.useQuery(
-        { ...values, type: typeToSpoonacularType(type) },
+        { ...values, type: type.toLowerCase() },
         {
             refetchOnWindowFocus: false,
             enabled: isSubmitting,

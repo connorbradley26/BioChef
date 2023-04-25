@@ -1,4 +1,3 @@
-import { mealPlans } from "@/types";
 import { ExtendedIngredient } from "@/types/Spoonacular/GetRecipeByID";
 
 interface MealIngredientsProps {
@@ -7,9 +6,6 @@ interface MealIngredientsProps {
 
 export default function MealIngredients({ ingredients }: MealIngredientsProps) {
     return (
-        <div className="p-4 ">
-            <h3 className="text-xl font-bold">Ingredients</h3>
-            <ul className="text-lg">
                 <table className="table ">
                     <thead>
                         <tr>
@@ -22,16 +18,14 @@ export default function MealIngredients({ ingredients }: MealIngredientsProps) {
                 {ingredients.map((ingredient, index) => (
                     <tr key={index}>
                         <td className="px-4 py-2 border">
-                            {ingredient.originalName}
+                            {ingredient.name}
                         </td>
                         <td className="px-4 py-2 border">
-                            {ingredient.measures?.metric?.amount} {ingredient.measures?.metric?.unitShort}
+                            {ingredient.amount} {ingredient.unit}
                         </td>
                     </tr>
                 ))}
                     </tbody>
                 </table>
-            </ul>
-        </div>
     );
 }

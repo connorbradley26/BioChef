@@ -1,57 +1,56 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
-import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
+import { createTRPCRouter, protectedProcedure, publicProcedure } from "@/server/api/trpc";
 import { spoonacularMeal } from "@/types";
 import { GetRecipeByID } from "@/types/Spoonacular/GetRecipeByID";
 import { getMealsByComplexQueryInput, getMealsByComplexQueryOutput } from "../zodTypes/getMealsByComplexQuery";
+import { createMealInput } from "../zodTypes/createMeal";
+import { getMealsByDateRangeInput } from "../zodTypes/getMealsByDateRange";
+import { getMealByIdInput, getMealByIdOutput } from "../zodTypes/getMealById";
+import { getMealInstructionsInput, getMealInstructionsOutput } from "../zodTypes/getMealInstructions";
 
 export const mealRouter = createTRPCRouter({
-    getMealSuggestionsByNutrition: protectedProcedure
-        .input(
-            z.object({
-                maxCalories: z.number().min(0).max(2000).optional(),
-                minCalories: z.number().min(0).max(2000).optional(),
-                maxCarbs: z.number().min(0).max(2000).optional(),
-                minCarbs: z.number().min(0).max(2000).optional(),
-                maxFat: z.number().min(0).max(2000).optional(),
-                minFat: z.number().min(0).max(2000).optional(),
-                maxProtein: z.number().min(0).max(2000).optional(),
-                minProtein: z.number().min(0).max(2000).optional(),
-            })
-        )
+
+    /**
+     * Public Procedure - No Authentication Required
+     * As it just queries the external API, its not needed.
+     * This allows us to do SSR without having to worry about authentication.
+     * 
+     * Should find another way to limit this, as it could be abused.
+     */
+    getMealById: publicProcedure
+        .input(getMealByIdInput)
         .query(async ({ ctx, input }) => {
-            const suggestedMeals = await fetch(
-                `https://api.spoonacular.com/recipes/findByNutrients?apiKey=${process.env.SPOONACULAR_API_KEY}&addRecipeInformation=true&number=10&maxCalories=${input.maxCalories}&minCalories=${input.minCalories}&maxCarbs=${input.maxCarbs}&minCarbs=${input.minCarbs}&maxFat=${input.maxFat}&minFat=${input.minFat}&maxProtein=${input.maxProtein}&minProtein=${input.minProtein}&addRecipeNutrition=true`
-            )
+            const mealDetails = await fetch(`https://api.spoonacular.com/recipes/${input.mealId}/information?includeNutrition=true&apiKey=${process.env.SPOONACULAR_API_KEY}`)
                 .then((response) => response.json())
                 .then((data) => {
-                    return data as spoonacularMeal[];
-                });
-
-            console.log(suggestedMeals);
-            return suggestedMeals;
-        }),
-
-    getMealById: protectedProcedure
-        .input(z.object({ mealId: z.string().min(1) }))
-        .query(async ({ ctx, input }) => {
-            const mealDetails = await fetch(
-                `https://api.spoonacular.com/recipes/${input.mealId}/information?includeNutrition=true&apiKey=${process.env.SPOONACULAR_API_KEY}`
-            )
-                .then((response) => response.json())
-                .then((data) => {
-                    return data as GetRecipeByID;
+                    const returnData = getMealByIdOutput.parse(data);
+                    console.log(returnData);
+                    return returnData;
                 });
             return mealDetails;
         }),
+        
+    getMealInstructions: publicProcedure
+        .input(getMealInstructionsInput)
+        .query(async ({ ctx, input }) => {
+            const mealInstructions = await fetch(`https://api.spoonacular.com/recipes/${input.mealId}/analyzedInstructions?apiKey=${process.env.SPOONACULAR_API_KEY}`)
+                .then((response) => response.json())
+                .then((data) => {
+                    const returnData = getMealInstructionsOutput.parse(data);
+                    console.log(returnData);
+                    return returnData;
+                });
+            return mealInstructions;
+        }),
+
 
     getMealsByComplexQuery: protectedProcedure
         .input(getMealsByComplexQueryInput)
         .query(async ({ ctx, input }) => {
-
             // Build URL
             const url = new URL("https://api.spoonacular.com/recipes/complexSearch");
-            
+
             for (const [key, value] of Object.entries(input)) {
                 if (value) {
                     url.searchParams.append(key, value as string);
@@ -73,29 +72,7 @@ export const mealRouter = createTRPCRouter({
         }),
 
     createMeal: protectedProcedure
-        .input(
-            z.object({
-                spoonacularId: z.number(),
-                title: z.string(),
-                servedAtDay: z.date(),
-                servedAtTime: z.string(),
-                steps: z.array(z.string()),
-                image: z.string(),
-                ingredients: z.array(
-                    z.object({
-                        name: z.string(),
-                        amount: z.number(),
-                        unit: z.string(),
-                    })
-                ),
-                nutrition: z.object({
-                    calories: z.number(),
-                    carbs: z.number(),
-                    fat: z.number(),
-                    protein: z.number(),                    
-                }),
-            })
-        )
+        .input(createMealInput)
         .mutation(async ({ ctx, input }) => {
             const meal = await ctx.prisma.meal.create({
                 data: {
@@ -128,8 +105,8 @@ export const mealRouter = createTRPCRouter({
             return meal;
         }),
 
-        getMealsByDateRange: protectedProcedure
-        .input( z.object({ dateFrom: z.date(), dateTo: z.date() }))
+    getMealsByDateRange: protectedProcedure
+        .input(getMealsByDateRangeInput)
         .query(async ({ ctx, input }) => {
             const meals = await ctx.prisma.meal.findMany({
                 where: {
@@ -151,5 +128,5 @@ export const mealRouter = createTRPCRouter({
                 });
             }
             return meals;
-        })
+        }),
 });

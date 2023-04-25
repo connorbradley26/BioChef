@@ -11,13 +11,17 @@ import type { SignedInAuthObject,SignedOutAuthObject } from "@clerk/nextjs/dist/
 
 import { prisma } from "@/server/api/db";
 
-interface AuthContext {
-  auth: SignedInAuthObject | SignedOutAuthObject;
+interface InnerContext {
+  auth: SignedInAuthObject | SignedOutAuthObject | null;
+  userId: string | null;  
 }
 
-export const createContextInner = async ({ auth }: AuthContext  ) => {
+// Used for SSG
+export const createContextInner = async (opts: InnerContext  ) => {
   return {
-    auth,
+    auth: opts.auth,
+    prisma,
+    userId: opts.userId,
   }
 }
 
@@ -28,17 +32,15 @@ export const createContextInner = async ({ auth }: AuthContext  ) => {
  * @see https://trpc.io/docs/context
  */
 export const createTRPCContext = async (opts: CreateNextContextOptions) => {
-  const {  req } = opts;
+  if (!opts) {
+    return createContextInner({ auth: null, userId: null });
+  }
+
+  const { req, res } = opts;  
   const session = getAuth(req);
   const userId = session.userId;
 
-  const inner = await createContextInner({ auth: getAuth(req) });
-
-  return {
-    ...inner,
-    prisma,
-    userId,
-  };
+  return createContextInner({ auth: getAuth(req), userId });
 }
 
 
@@ -92,7 +94,7 @@ export const publicProcedure = t.procedure;
 
 /** Reusable middleware that enforces users are logged in before running the procedure. */
 const enforceUserIsAuthed = t.middleware(({ ctx, next }) => {
-  if (!ctx.auth.userId) {
+  if (!ctx.auth?.userId || !ctx.userId) {
     throw new TRPCError({ code: "UNAUTHORIZED" });
   }
   return next({
