@@ -33,6 +33,13 @@ export const getMealsByComplexQueryOutput =
                         unit: z.string(),
                     })
                 ),
+                ingredients: z.array(
+                    z.object({
+                        name: z.string(),
+                        amount: z.number(),
+                        unit: z.string(),
+                    })
+                ),
             }),
             analyzedInstructions: z.array(
                 z.object({

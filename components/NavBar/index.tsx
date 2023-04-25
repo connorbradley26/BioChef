@@ -32,6 +32,10 @@ export default function NavBar() {
                 name: "Meal Plans",
                 link: "/meal-plans",
             },
+            {
+                name: "Shopping List",
+                link: "/shopping-list",
+            }
         ];
     }
 
