@@ -15,10 +15,10 @@ const MealCardActions = () => {
     }
 
     return (
-        <div className="w-full h-full ">
+        <div className="card-action">
             {link ? (
                 <Link href={link}>
-                    <button className="w-full h-full btn-primary btn" onClick={handleClick}>{buttonText ? buttonText : "View"}</button>
+                    <button className="w-full h-full btn-primary btn hover:bg-black/90" onClick={handleClick}>{buttonText ? buttonText : "View"}</button>
                 </Link>
             ) : (
                 <button className="w-full h-full btn-primary btn" onClick={handleClick}>{buttonText ? buttonText : "View"}</button>

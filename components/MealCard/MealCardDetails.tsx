@@ -1,10 +1,5 @@
-import { z } from "zod";
 import { useMealCardContext } from "./MealCardContext";
-import { RouterInputs, RouterOutputs } from "@/lib/api";
-type CreateMeal = RouterInputs["meals"]["createMeal"];
-type GetMeal = RouterOutputs["meals"]["getMealsByDateRange"][number];
 
-// TODO - update this to have actual details
 const MealCardDetails = () => {
     const { getMeal, createMeal } = useMealCardContext();
     const meal = getMeal || createMeal;
@@ -13,6 +8,7 @@ const MealCardDetails = () => {
         return null;
     }
 
+    // Todo - get nutrition from users data
     const formattedNutrition = () => {
         if (!meal?.nutrition) {
             return null;
@@ -53,17 +49,10 @@ const MealCardDetails = () => {
             <div className="">
                 {formattedNutrition()?.map((nutrient) => {
                     return (
-                        <div
-                            key={nutrient.name}
-                            className="grid items-center grid-cols-2 ">
+                        <div key={nutrient.name} className="grid items-center grid-cols-2 ">
                             <span>{nutrient.name}</span>
-                            <div
-                                className="tooltip"
-                                data-tip={nutrient.value + nutrient.unit}>
-                                <progress
-                                    className=" progress"
-                                    value={nutrient.value}
-                                    max={nutrient.max}></progress>
+                            <div className="tooltip" data-tip={nutrient.value + nutrient.unit}>
+                                <progress className=" progress" value={nutrient.value} max={nutrient.max}></progress>
                             </div>
                         </div>
                     );

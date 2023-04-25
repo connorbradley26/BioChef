@@ -25,7 +25,9 @@ const MealCard = ({ getMeal, createMeal, link, buttonText, createAction, getActi
                 <div className="card-body">
                     <MealCardTitle />
                     <MealCardDetails />
+                    <div className="h-full"></div>
                     <MealCardActions />
+                    
                 </div>
             </div>
         </MealCardContext.Provider>

@@ -13,7 +13,7 @@ describe("Meal Plans", () => {
 
     it("Should navigate to add-meal on card click", () => {
         cy.visit("/meal-plans");
-        cy.get(".carousel-item").first().click();
+        cy.get("button").contains("Add New Meal").first().click();
         cy.url().should("include", "/add-new-meals");
     })
 })
